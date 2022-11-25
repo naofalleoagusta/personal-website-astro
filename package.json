@@ -1,5 +1,6 @@
 {
-  "name": "naofal-personal-website",
+  "name": "@example/basics",
+  "type": "module",
   "version": "0.0.1",
   "private": true,
   "scripts": {
@@ -9,7 +10,7 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "devDependencies": {
-    "astro": "^1.0.7"
+  "dependencies": {
+    "astro": "^1.6.11"
   }
 }
