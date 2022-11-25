@@ -1,0 +1,22 @@
+---
+export interface Props {
+  title: string;
+  isTitle?: boolean;
+  classes?: string;
+}
+
+const { title, isTitle = false, classes } = Astro.props;
+---
+
+<section class={`w-full flex flex-col space-y-8 ${classes ? classes : ""}`}>
+  {
+    isTitle ? (
+      <h1 class="text-5xl dark:text-white font-bold">{title}</h1>
+    ) : (
+      <h2 class="text-2xl md:text-3xl dark:text-white font-bold underline decoration-dotted">
+        {title}
+      </h2>
+    )
+  }
+  <slot />
+</section>

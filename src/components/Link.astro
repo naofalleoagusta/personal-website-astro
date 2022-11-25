@@ -1,0 +1,26 @@
+---
+import type { LinkType } from "../types";
+
+export interface Props extends LinkType {}
+
+const { href, text, icon, classes } = Astro.props;
+---
+
+<a
+  href={href}
+  class={`flex items-center space-x-2 ${
+    classes ? classes : ""
+  } hover:font-bold`}
+>
+  {
+    icon && (
+      <div class="dark:bg-white p-1 rounded-md">
+        <img src={`/${icon}.svg`} />
+      </div>
+    )
+  }
+  <span
+    class="border-b-2 border-dotted border-black dark:border-white dark:text-white"
+    >{text}</span
+  >
+</a>
