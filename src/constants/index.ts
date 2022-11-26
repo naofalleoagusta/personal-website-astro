@@ -100,6 +100,7 @@ export const TOOLS_ICON: Record<string, string> = {
   "Material-UI": "mui.svg",
   Tailwind: "tailwind.svg",
   Astro: "astro.svg",
+  "Vite.js": "vitejs.svg",
 };
 
 export const TECH_STACK = [
@@ -109,4 +110,5 @@ export const TECH_STACK = [
   "Tailwind",
   "GraphQL",
   "Next.js",
+  "Vite.js",
 ];

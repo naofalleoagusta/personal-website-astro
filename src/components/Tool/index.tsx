@@ -1,5 +1,5 @@
 import { Popover, Transition } from "@headlessui/react";
-import { useRef, useState, Fragment } from "react";
+import { useRef, useState, Fragment, useId } from "react";
 import { usePopper } from "react-popper";
 
 import { TOOLS_ICON } from "../../constants";
@@ -37,6 +37,7 @@ const Tool = ({ name, size }: ToolProps) => {
       },
     ],
   });
+  const id = useId;
 
   const toggleMenu = () => {
     setOpenState((prev) => !prev);
@@ -53,7 +54,11 @@ const Tool = ({ name, size }: ToolProps) => {
   };
   return (
     <Popover>
-      <Popover.Button ref={setReferenceElement} className="focus:outline-none">
+      <Popover.Button
+        ref={setReferenceElement}
+        className="focus:outline-none"
+        id={`${name}-${size}-${id}`}
+      >
         <div
           onMouseEnter={() => onHover(openState, "onMouseEnter")}
           onMouseLeave={() => onHover(openState, "onMouseLeave")}

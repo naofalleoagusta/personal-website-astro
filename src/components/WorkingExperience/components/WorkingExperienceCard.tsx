@@ -50,15 +50,13 @@ const WorkingExperienceCard = ({
   };
 
   return (
-    <div
-      className="flex space-x-4 w-full cursor-pointer"
-      onClick={handleOnClick}
-    >
+    <div className="flex space-x-4 w-full">
       <div className="w-[20px] h-[20px] bg-transparent rounded-full border-2 border-black dark:border-white absolute left-[7px]">
         <div className="w-[10px] h-[10px] bg-black dark:bg-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full" />
       </div>
       <div
-        className={`flex-grow bg-gray-100 dark:bg-gray-900 p-4 rounded-xl mt-[-30px] min-w-0 mb-10`}
+        className="cursor-pointer flex-grow bg-gray-100 dark:bg-gray-900 p-4 rounded-xl mt-[-30px] min-w-0 mb-10"
+        onClick={handleOnClick}
       >
         <div className="flex items-center">
           <img
@@ -109,7 +107,7 @@ const WorkingExperienceCard = ({
             <div ref={expandedContentRef}>
               {expandedContent}
               <div className="mt-4">
-                <h4 className="font-bold mb-4">Skill & Tech Stacks : </h4>
+                <h4 className="font-bold mb-4">Skill & Tech Stack : </h4>
                 <div className="flex flex-wrap">
                   {tools.map((tool, idx) => (
                     <Tool name={tool} size="small" key={`${tool}-${idx}`} />
