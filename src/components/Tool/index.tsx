@@ -1,5 +1,5 @@
-import { Popover, Transition } from "@headlessui/react";
-import { useRef, useState, Fragment, useId } from "react";
+import { Popover } from "@headlessui/react";
+import { useState, useId } from "react";
 import { usePopper } from "react-popper";
 
 import { TOOLS_ICON } from "../../constants";
