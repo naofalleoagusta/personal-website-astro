@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 
 import Tool from "../../Tool";
 
@@ -8,37 +8,36 @@ import type { WorkingExperienceType } from "../constant";
 
 type WorkingExperienceCardProps = WorkingExperienceType;
 
+const preventPropagation = (event: any) => {
+  event.stopPropagation();
+};
+
 const WorkingExperienceCard = ({
-  content,
   employmentType,
   endDate,
   expandedContent,
   name,
   startDate,
+  website,
   tools,
 }: WorkingExperienceCardProps) => {
   const [expand, setExpand] = useState(false);
-  const [expandedContentHeight, setExpandedContentHeight] = useState("");
-  const expandedContentRef = useRef<HTMLDivElement>(null);
 
   const handleOnClick = () => {
     setExpand((prev) => !prev);
   };
 
   const handleOnClickBtn = (event: any) => {
-    event.stopPropagation();
+    preventPropagation(event);
     handleOnClick();
   };
 
-  useEffect(() => {
-    console.log(expandedContent, tools);
-    if (expandedContentRef?.current) {
-      console.log(expandedContentRef.current.clientHeight);
-      setExpandedContentHeight(
-        `max-h-[${expandedContentRef.current.clientHeight}px]`
-      );
+  const handleOnClickCompany = (event: any) => {
+    preventPropagation(event);
+    if (website) {
+      window.open(website);
     }
-  }, [expandedContentRef?.current]);
+  };
 
   return (
     <div
@@ -58,10 +57,23 @@ const WorkingExperienceCard = ({
             className="w-[55px] h-[55px] mr-3 p-1 rounded-xl"
             width={55}
             height={55}
+            onClick={handleOnClickCompany}
           />
           <div className="flex-grow">
             <h3 className="font-bold text-sm md:text-lg dark:text-white">
-              {name}
+              {website ? (
+                <a
+                  href={website}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  onClick={handleOnClickCompany}
+                  className="hover:border-b-2 border-dotted border-black dark:border-white"
+                >
+                  {name}
+                </a>
+              ) : (
+                name
+              )}
             </h3>
             <div className="md:flex items-center dark:text-white text-xs">
               <p className="mr-2">{employmentType}</p>
@@ -76,10 +88,10 @@ const WorkingExperienceCard = ({
         <div className="dark:text-white p-2 min-w-0">
           <div
             className={`overflow-hidden ${
-              expand ? "max-h-[900px]" : "max-h-5"
+              expand ? "max-h-[900px]" : "max-h-12"
             } transition-maxHeight duration-500 ease-in-out`}
           >
-            <div ref={expandedContentRef}>
+            <div>
               {expandedContent}
               <div className="mt-4">
                 <h4 className="font-bold mb-4">Skill & Tools : </h4>
@@ -92,7 +104,7 @@ const WorkingExperienceCard = ({
             </div>
           </div>
           <button
-            className="w-full p-2 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md mt-4 hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
+            className="w-full p-2 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md mt-2 hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
             onClick={handleOnClickBtn}
           >
             {expand ? "See Less" : "See More"}
@@ -105,7 +117,7 @@ const WorkingExperienceCard = ({
 
 const ArrowIcon = ({ expand }: { expand: boolean }) => {
   const { theme } = useTheme();
-
+  console.log(theme);
   return (
     <div className="pr-4">
       <svg
@@ -113,8 +125,9 @@ const ArrowIcon = ({ expand }: { expand: boolean }) => {
         width="16"
         height="16"
         viewBox="0 0 24 24"
-        fill={theme === "dark" ? "#FFFFFF" : "#000000"}
-        className={`transition-all ${expand ? "rotate-180" : ""}`}
+        className={`transition-all ${
+          expand ? "rotate-180" : ""
+        } fill-black dark:fill-white`}
       >
         <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
       </svg>

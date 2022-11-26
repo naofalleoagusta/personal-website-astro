@@ -1,6 +1,8 @@
 import create from "zustand";
 import { persist, devtools } from "zustand/middleware";
 
+const KEY = "theme";
+
 type ThemeType = {
   theme: string;
   handleSetTheme: () => void;
@@ -9,7 +11,7 @@ type ThemeType = {
 const useTheme = create<ThemeType>()(
   devtools(
     persist((set) => ({
-      theme: localStorage?.getItem("theme") || "light",
+      theme: localStorage?.getItem(KEY) || "light",
       handleSetTheme: () => {
         set((prev) => ({
           theme: prev.theme === "light" ? "dark" : "light",

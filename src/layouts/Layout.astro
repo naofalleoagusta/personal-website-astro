@@ -62,5 +62,12 @@ const { title } = Astro.props;
       document.documentElement.classList.add("dark");
     }
     window.localStorage.setItem("theme", theme);
+    if (history.scrollRestoration) {
+      history.scrollRestoration = "manual";
+    } else {
+      window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+      };
+    }
   </script>
 </html>

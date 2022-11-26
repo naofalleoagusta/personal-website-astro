@@ -27,12 +27,12 @@ const Tool = ({ name, size }: ToolProps) => {
   let [popperElement, setPopperElement] = useState<HTMLDivElement | null>();
   const [openState, setOpenState] = useState(false);
   let { styles, attributes } = usePopper(referenceElement, popperElement, {
-    placement: "bottom",
+    placement: "top",
     modifiers: [
       {
         name: "offset",
         options: {
-          offset: [-6, -12],
+          offset: [-6, 8],
         },
       },
     ],
@@ -60,7 +60,7 @@ const Tool = ({ name, size }: ToolProps) => {
           className={`${classes[size]} rounded-lg  bg-gray-200 dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out mr-4 mb-4`}
         >
           <img
-            src={TOOLS_ICON[name]}
+            src={`/${TOOLS_ICON[name]}`}
             alt={`${name} icon`}
             width={SIZES[size]}
             height={SIZES[size]}
