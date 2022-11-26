@@ -2,6 +2,8 @@ import { memo, useEffect, useRef, useState } from "react";
 
 import Tool from "../../Tool";
 
+import scrollToView from "../../../helpers/scrollToView";
+
 import type { WorkingExperienceType } from "../constant";
 
 type WorkingExperienceCardProps = WorkingExperienceType & {
@@ -35,6 +37,12 @@ const WorkingExperienceCard = ({
 
   const handleOnClick = () => {
     handleExpand(name);
+    if (!expand) {
+      setTimeout(
+        () => scrollToView(`${name.toLocaleLowerCase()}-experience`),
+        400
+      );
+    }
   };
 
   const handleOnClickBtn = (event: any) => {
@@ -57,6 +65,7 @@ const WorkingExperienceCard = ({
       <div
         className="cursor-pointer flex-grow bg-gray-100 dark:bg-gray-900 p-4 rounded-xl mt-[-30px] min-w-0 mb-10"
         onClick={handleOnClick}
+        id={`${name.toLocaleLowerCase()}-experience`}
       >
         <div className="flex items-center">
           <img
