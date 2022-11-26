@@ -1,10 +1,13 @@
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 
 import Tool from "../../Tool";
 
 import type { WorkingExperienceType } from "../constant";
 
-type WorkingExperienceCardProps = WorkingExperienceType;
+type WorkingExperienceCardProps = WorkingExperienceType & {
+  expand: boolean;
+  handleExpand: (target: string) => void;
+};
 
 const preventPropagation = (event: any) => {
   event.stopPropagation();
@@ -18,8 +21,9 @@ const WorkingExperienceCard = ({
   startDate,
   website,
   tools,
+  expand,
+  handleExpand,
 }: WorkingExperienceCardProps) => {
-  const [expand, setExpand] = useState(false);
   const [expandedContentHeight, setExpandedContentHeight] = useState(0);
   const expandedContentRef = useRef<HTMLDivElement>(null);
 
@@ -30,7 +34,7 @@ const WorkingExperienceCard = ({
   }, []);
 
   const handleOnClick = () => {
-    setExpand((prev) => !prev);
+    handleExpand(name);
   };
 
   const handleOnClickBtn = (event: any) => {
@@ -105,7 +109,7 @@ const WorkingExperienceCard = ({
             <div ref={expandedContentRef}>
               {expandedContent}
               <div className="mt-4">
-                <h4 className="font-bold mb-4">Skill & Tools : </h4>
+                <h4 className="font-bold mb-4">Skill & Tech Stacks : </h4>
                 <div className="flex flex-wrap">
                   {tools.map((tool, idx) => (
                     <Tool name={tool} size="small" key={`${tool}-${idx}`} />
@@ -144,4 +148,7 @@ const ArrowIcon = ({ expand }: { expand: boolean }) => {
   );
 };
 
-export default WorkingExperienceCard;
+export default memo(WorkingExperienceCard, (prevProps, nextProps) => {
+  console.log(prevProps, nextProps);
+  return prevProps.expand === nextProps.expand;
+});

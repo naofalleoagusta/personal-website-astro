@@ -5,21 +5,21 @@ export const BASE_URL = "https://naofalleoagusta.xyz/";
 export const LINKS: LinkType[] = [
   {
     href: "https://github.com/naofalleoagusta",
-    text: "github",
+    text: "Github",
     icon: "github",
     classes: "mr-2 mt-2",
     newTab: true,
   },
   {
     href: "https://www.linkedin.com/in/naofal-leo-agusta/",
-    text: "linkedin",
+    text: "LinkedIn",
     icon: "linkedin",
     classes: "mr-2 mt-2",
     newTab: true,
   },
   {
     href: "https://www.linkedin.com/in/naofal-leo-agusta/",
-    text: "resume",
+    text: "Resume",
     icon: "resume",
     classes: "mt-2",
     newTab: true,
@@ -101,3 +101,11 @@ export const TOOLS_ICON: Record<string, string> = {
   Tailwind: "tailwind.svg",
   Astro: "astro.svg",
 };
+
+export const TECH_STACK = [
+  "React",
+  "Typescript",
+  "Node.js",
+  "Tailwind",
+  "GraphQL",
+];

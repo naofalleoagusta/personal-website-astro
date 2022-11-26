@@ -3,12 +3,13 @@ import Link from "../components/Link.astro";
 import Section from "../components/Section.astro";
 import WorkingExperience from "../components/WorkingExperience/WorkingExperience.astro";
 import Layout from "../layouts/Layout.astro";
+import Tool from "../components/Tool";
 
-import { LINKS } from "../constants";
+import { LINKS, TECH_STACK } from "../constants";
 ---
 
 <Layout>
-  <Section isTitle title="Hello, I'm Naofal!🙋🏽‍♂️" classes="py-24">
+  <Section isTitle title="Hello, I'm Naofal!🙋🏽‍♂️" classes="pt-24 pb-16">
     <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
       <p class="text-black dark:text-white">
         I'm a software engineer based in Palembang, Indonesia 🇮🇩. I have
@@ -19,6 +20,16 @@ import { LINKS } from "../constants";
     </div>
     <div class="flex mt-4 flex-wrap">
       {LINKS.map((link) => <Link {...link} />)}
+    </div>
+  </Section>
+
+  <Section title="My Favorite Tech Stack 🧪" classes="mb-16">
+    <div class="flex mt-4 flex-wrap">
+      {
+        TECH_STACK.map((dtTechStack) => (
+          <Tool name={dtTechStack} size="large" client:visible />
+        ))
+      }
     </div>
   </Section>
   <WorkingExperience />
