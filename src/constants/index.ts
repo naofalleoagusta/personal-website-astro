@@ -108,4 +108,5 @@ export const TECH_STACK = [
   "Node.js",
   "Tailwind",
   "GraphQL",
+  "Next.js",
 ];

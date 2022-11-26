@@ -122,7 +122,7 @@ const WorkingExperienceCard = ({
             className="w-full p-2 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md mt-2 hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
             onClick={handleOnClickBtn}
           >
-            {expand ? "See Less" : "See More"}
+            View {expand ? "Less" : "More"}
           </button>
         </div>
       </div>
@@ -138,8 +138,8 @@ const ArrowIcon = ({ expand }: { expand: boolean }) => {
         width="16"
         height="16"
         viewBox="0 0 24 24"
-        className={`transition-all ${
-          expand ? "rotate-180" : ""
+        className={`transition-transform duration-300 ease-in-out ${
+          expand ? "-rotate-180" : ""
         } fill-black dark:fill-white`}
       >
         <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
