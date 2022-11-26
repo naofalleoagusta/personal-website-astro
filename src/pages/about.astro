@@ -1,11 +1,80 @@
 ---
 import Section from "../components/Section.astro";
-import { BASE_URL } from "..//constants";
+import { BASE_URL, TECH_STACK } from "..//constants";
 import Layout from "../layouts/Layout.astro";
+import Link from "../components/Link.astro";
+import Tool from "../components/Tool";
 ---
 
-<Layout title="naofalleoagusta | Blog" permalink={`${BASE_URL}about`}>
-  <Section isTitle title="Under Construction 🚧" classes="py-24"
-    ><p class="mb-52">I'm working on this page!</p>
+<Layout
+  title="naofalleoagusta | About"
+  permalink={`${BASE_URL}about`}
+  description="My fullname is Naofal Leo Agusta, I was born and raised in Palembang, Indonesia 🇮🇩. I've been working as a software engineer for the last 3 years with Computer Science Degree from Parahyangan Catholic University (UNPAR) , Bandung, Indonesia. For the last 2 years, I've been more specialized at front-end engineering."
+>
+  <Section isTitle title="About Me 🤓" classes="pt-24 pb-12">
+    <div class="space-y-4 dark:text-white">
+      <p>
+        My fullname is Naofal Leo Agusta, I was born and raised in Palembang,
+        Indonesia 🇮🇩. I've been working as a software engineer for the last 3
+        years with Computer Science Degree from <Link
+          text="Parahyangan Catholic University (UNPAR)"
+          href="https://unpar.ac.id/"
+          newTab={true}
+        />, Bandung, Indonesia 🇮🇩. For the last 2 years, I've been more
+        specialized at front-end engineering.
+      </p>
+      <p>
+        I've been lucky enough to work with several tech stack, but I would say
+        I'm more prolific to work with these tech stack:
+      </p>
+
+      <div class="flex flex-wrap">
+        {
+          TECH_STACK.map((dtTechStack) => (
+            <Tool name={dtTechStack} size="medium" client:visible />
+          ))
+        }
+      </div>
+      <p>
+        I love learning new things, because I enjoyed being fascinated by new
+        knowledge, especially technology. Therefore, I'm open to learn new tech
+        stack or programming language, for the sake of my employer and science.
+        At the moment, I'm trying to learn Rust and WASM, because I heard it was <strong
+          >blazingly fast 🔥</strong
+        >
+      </p>
+      <p>
+        I'm currently based in Palembang, Indonesia 🇮🇩, but I've been working
+        remotely for several startup in Indonesia. I'm open for remote roles
+        across the world.
+      </p>
+      <p>
+        Feel free to hit my email boxes : <Link
+          text="naofal.leo.agusta98@gmail.com"
+          href="mailto:naofal.leo.agusta98@gmail.com"
+        />
+      </p>
+    </div>
+  </Section>
+  <Section title="Hobbies 🎮" classes="pb-12">
+    <div class="space-y-4 dark:text-white">
+      <p>
+        I used to be a gym rat, till pandemic happen 😭. These days I'd rather
+        sit on my chair playing games like Dota 2 or FIFA. Most devs love
+        watching anime, but I don't really watch anime that much, I can use my
+        fingers to count how many anime I've watched. But I must say, I love
+        Attack on Titan, Demons Slayer, and Cyberpunk 2077 Edgerunners. Go check
+        them out if you haven't!.
+      </p>
+      <p>
+        I would say I'm very passionate about sports, especially Football. I've
+        been a Man United fan since God knows when. I also watch Formula 1, NBA
+        and American Footbal. For me the best athlete of all time a.k.a The 🐐,
+        is Lebron James. I love his dedication to basketball, by the time I'm
+        writing this he is about to be 38 years old, and he doesn't show any
+        sign of retiring. I'm planning to do the same in term of software
+        engineering 😂.
+      </p>
+    </div>
   </Section>
 </Layout>
