@@ -57,7 +57,7 @@ const Tool = ({ name, size }: ToolProps) => {
       <Popover.Button
         ref={setReferenceElement}
         className="focus:outline-none"
-        id={`${name}-${size}-${id}`}
+        id={`btn-${name}-${size}-${id}`}
       >
         <div
           onMouseEnter={() => onHover(openState, "onMouseEnter")}

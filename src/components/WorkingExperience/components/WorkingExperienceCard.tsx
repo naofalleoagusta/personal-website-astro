@@ -119,6 +119,7 @@ const WorkingExperienceCard = ({
           <button
             className="w-full p-2 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md mt-2 hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
             onClick={handleOnClickBtn}
+            id={`btn-${name}`}
           >
             View {expand ? "Less" : "More"}
           </button>
