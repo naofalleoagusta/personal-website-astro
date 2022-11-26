@@ -11,7 +11,7 @@ const {
   title = "naofalleoagusta | Software Engineer",
   description = "Personal Website of Naofal Leo Agusta. I work with React, Typescript, and Node.js",
   permalink = BASE_URL,
-  ogImage = "https://naofalleoagusta.xyz/OG.png",
+  ogImage = `${BASE_URL}/OG.png`,
 } = Astro.props;
 ---
 
@@ -38,7 +38,5 @@ const {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={ogImage} />
-<meta
-  name="twitter:image:alt"
-  content="naofalleoagusta's Website Banner"
-/><meta name="twitter:creator" content="@naofalxyz" />
+<meta name="twitter:image:alt" content="naofalleoagusta's Website Banner" />
+<meta name="twitter:creator" content="@naofalxyz" />
