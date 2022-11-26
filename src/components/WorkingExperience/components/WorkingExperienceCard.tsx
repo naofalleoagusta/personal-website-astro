@@ -37,12 +37,10 @@ const WorkingExperienceCard = ({
 
   const handleOnClick = () => {
     handleExpand(name);
-    if (!expand) {
-      setTimeout(
-        () => scrollToView(`${name.toLocaleLowerCase()}-experience`),
-        400
-      );
-    }
+    setTimeout(
+      () => scrollToView(`${name.toLocaleLowerCase()}-experience`),
+      400
+    );
   };
 
   const handleOnClickBtn = (event: any) => {
@@ -71,7 +69,7 @@ const WorkingExperienceCard = ({
           <img
             src={`/${name}.webp`}
             alt={`${name} logo`}
-            className="w-[55px] h-[55px] mr-3 p-1 rounded-xl"
+            className="w-[55px] h-[55px] mr-3 p-1 rounded-xl cursor-newTab"
             width={55}
             height={55}
             onClick={handleOnClickCompany}
@@ -84,7 +82,7 @@ const WorkingExperienceCard = ({
                   target="_blank"
                   rel="noreferrer noopener"
                   onClick={handleOnClickCompany}
-                  className="hover:border-b-2 border-dotted border-black dark:border-white"
+                  className="hover:border-b-2 border-dotted border-black dark:border-white cursor-newTab"
                 >
                   {name}
                 </a>
@@ -126,7 +124,7 @@ const WorkingExperienceCard = ({
             </div>
           </div>
           <button
-            className="w-full p-2 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md mt-2 hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
+            className="w-full p-2 mt-4 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
             onClick={handleOnClickBtn}
             id={`btn-${name}`}
           >

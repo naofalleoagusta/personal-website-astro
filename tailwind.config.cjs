@@ -7,6 +7,9 @@ module.exports = {
         maxHeight: "max-height",
       },
       display: ["group-hover"],
+      cursor: {
+        newTab: "url('/new-tab.png') 10 10,pointer",
+      },
     },
   },
   plugins: [],
