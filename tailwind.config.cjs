@@ -6,6 +6,7 @@ module.exports = {
       transitionProperty: {
         maxHeight: "max-height",
       },
+      display: ["group-hover"],
     },
   },
   plugins: [],

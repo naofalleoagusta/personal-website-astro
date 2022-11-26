@@ -1,7 +1,7 @@
 export type LinkType = {
   href: string;
   text: string;
-  icon?: "github" | "linkedin" | "resume";
+  icon?: string;
   classes?: string;
 };
 

@@ -39,8 +39,8 @@ const WorkingExperienceCard = ({
   };
 
   const handleOnClickCompany = (event: any) => {
-    preventPropagation(event);
     if (website) {
+      preventPropagation(event);
       window.open(website);
     }
   };

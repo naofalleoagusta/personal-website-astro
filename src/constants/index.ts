@@ -42,4 +42,6 @@ export const TOOLS_ICON: Record<string, string> = {
   Typescript: "ts.svg",
   SEO: "seo.svg",
   "Material-UI": "mui.svg",
+  Tailwind: "tailwind.svg",
+  Astro: "astro.svg",
 };

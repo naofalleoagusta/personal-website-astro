@@ -1,0 +1,25 @@
+---
+import Link from "./Link.astro";
+---
+
+<footer
+  class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6 py-14 dark:text-white"
+>
+  <div class="grid grid-cols-1 md:grid-cols-3">
+    <div>Test</div>
+    <div>Test</div>
+    <div>Test</div>
+  </div>
+  <div class="flex justify-center">
+    <span class="flex items-center tracking-tighter">
+      <span class="mb-[1.5px] mr-[6px]">Made with 💖 on</span>
+      <Link text="Astro" href="https://astro.build/" icon="astro" /><span
+        class="mb-[1.5px] mr-[6px]">,</span
+      >
+      <Link text="React" href="https://reactjs.org/" icon="react" /><span
+        class="mb-[1.5px] mr-[6px]">, and</span
+      >
+      <Link text="Tailwind" href="https://tailwindcss.com/" icon="tailwind" />
+    </span>
+  </div>
+</footer>
