@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import Tool from "../../Tool";
-
-import useTheme from "../../../helpers/useTheme";
 
 import type { WorkingExperienceType } from "../constant";
 
@@ -22,6 +20,14 @@ const WorkingExperienceCard = ({
   tools,
 }: WorkingExperienceCardProps) => {
   const [expand, setExpand] = useState(false);
+  const [expandedContentHeight, setExpandedContentHeight] = useState(0);
+  const expandedContentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (expandedContentRef?.current) {
+      setExpandedContentHeight(expandedContentRef.current.clientHeight);
+    }
+  }, []);
 
   const handleOnClick = () => {
     setExpand((prev) => !prev);
@@ -87,11 +93,16 @@ const WorkingExperienceCard = ({
         </div>
         <div className="dark:text-white p-2 min-w-0">
           <div
-            className={`overflow-hidden ${
-              expand ? "max-h-[900px]" : "max-h-12"
-            } transition-maxHeight duration-500 ease-in-out`}
+            className="overflow-hidden max-h-12 transition-maxHeight duration-500 ease-in-out"
+            style={
+              expand
+                ? {
+                    maxHeight: expandedContentHeight,
+                  }
+                : {}
+            }
           >
-            <div>
+            <div ref={expandedContentRef}>
               {expandedContent}
               <div className="mt-4">
                 <h4 className="font-bold mb-4">Skill & Tools : </h4>
@@ -116,8 +127,6 @@ const WorkingExperienceCard = ({
 };
 
 const ArrowIcon = ({ expand }: { expand: boolean }) => {
-  const { theme } = useTheme();
-  console.log(theme);
   return (
     <div className="pr-4">
       <svg
