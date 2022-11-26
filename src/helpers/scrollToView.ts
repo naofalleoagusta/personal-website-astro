@@ -1,7 +1,7 @@
 const scrollToView = (id: string) => {
   const element = document.getElementById(id);
   if (element) {
-    const yOffset = -80;
+    const yOffset = -100;
     const y =
       element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
