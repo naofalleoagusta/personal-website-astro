@@ -1,4 +1,6 @@
 ---
+import { BASE_URL } from '../constants';
+
 export interface Props {
   title?: string;
   description?: string;
@@ -8,7 +10,7 @@ export interface Props {
 const {
   title = "naofalleoagusta | Software Engineer",
   description = "Personal Website of Naofal Leo Agusta. I work with React, Typescript, and Node.js",
-  permalink = "https://naofalleoagusta.xyz",
+  permalink = BASE_URL,
   ogImage = "/OG.png",
 } = Astro.props;
 ---

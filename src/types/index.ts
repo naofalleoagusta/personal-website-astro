@@ -3,6 +3,7 @@ export type LinkType = {
   text: string;
   icon?: string;
   classes?: string;
+  newTab?: boolean;
 };
 
 export type ThemeOptionsType = {

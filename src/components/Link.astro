@@ -3,7 +3,7 @@ import type { LinkType } from "../types";
 
 export interface Props extends LinkType {}
 
-const { href, text, icon, classes } = Astro.props;
+const { href, text, icon, classes, newTab } = Astro.props;
 ---
 
 <a
@@ -11,6 +11,8 @@ const { href, text, icon, classes } = Astro.props;
   class={`flex items-center space-x-2 ${
     classes ? classes : ""
   } hover:font-bold group`}
+  target={newTab ? "_blank" : ""}
+  rel="noreferrer noopener"
 >
   {
     icon && (

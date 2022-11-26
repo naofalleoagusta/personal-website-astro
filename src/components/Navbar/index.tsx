@@ -42,7 +42,9 @@ const Navbar = () => {
     >
       <div className="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6">
         <nav className="w-full flex justify-between items-center py-6">
-          <span className="text-xl font-bold dark:text-white">NLA/~</span>
+          <a href="/" className="text-xl font-bold dark:text-white">
+            NLA/~
+          </a>
           <div className="flex space-x-4 items-center">
             <a className="text-md dark:text-white hover:font-bold" href="/blog">
               Blog
