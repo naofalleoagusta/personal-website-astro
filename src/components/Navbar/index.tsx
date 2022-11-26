@@ -1,12 +1,13 @@
 import { Switch } from "@headlessui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import useTheme from "../../helpers/useTheme";
 
 const Navbar = () => {
-  const [theme, setTheme] = useState<string>("light");
+  const { theme, handleSetTheme } = useTheme();
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleOnClickSwitch = () => {
-    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+    handleSetTheme();
     const isLightMode = theme === "light";
     if (isLightMode) {
       document.documentElement.classList.add("dark");
@@ -22,12 +23,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    if (typeof localStorage !== undefined) {
-      setTheme(localStorage?.getItem("theme") ?? "light");
-    }
-  }, []);
-
-  useEffect(() => {
     if (typeof window !== "undefined") {
       window.addEventListener("scroll", handleOnScroll);
 
@@ -39,7 +34,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`w-full sticky top-0 transition duration-200 ease-in-out ${
+      className={`w-full fixed top-0 transition duration-200 ease-in-out z-50 ${
         isScrolled
           ? "shadow-md bg-white dark:bg-gray-900 dark:bg-opacity-50 dark:backdrop-blur dark:backdrop-filter dark:firefox:bg-opacity-90 dark:shadow-none"
           : ""
@@ -49,10 +44,7 @@ const Navbar = () => {
         <nav className="w-full flex justify-between items-center py-6">
           <span className="text-xl font-bold dark:text-white">NLA/~</span>
           <div className="flex space-x-4 items-center">
-            <a
-              className="text-md dark:text-white hover:font-bold"
-              href="/blog"
-            >
+            <a className="text-md dark:text-white hover:font-bold" href="/blog">
               Blog
             </a>
             <Switch

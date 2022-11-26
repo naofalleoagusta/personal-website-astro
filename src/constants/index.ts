@@ -20,3 +20,19 @@ export const LINKS: LinkType[] = [
     classes: "mt-2",
   },
 ];
+
+export const TOOLS_ICON: Record<string, string> = {
+  React: "/react.svg",
+  GraphQL: "/graphql.svg",
+  Javascript: "/js.svg",
+  Bootstrap: "/bootstrap.svg",
+  "Node.js": "/node.svg",
+  "Apollo GraphQL": "/apollo.svg",
+  CSS: "/css.svg",
+  PostgreSQL: "/postgre.svg",
+  MySql: "/mysql.svg",
+  jQuery: "/jquery.svg",
+  PHP: "/php.svg",
+  Laravel: "/laravel.svg",
+  CodeIgniter: "/codeigniter.svg",
+};

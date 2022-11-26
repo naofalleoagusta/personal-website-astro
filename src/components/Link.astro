@@ -15,7 +15,7 @@ const { href, text, icon, classes } = Astro.props;
   {
     icon && (
       <div class="dark:bg-white p-1 rounded-md">
-        <img src={`/${icon}.svg`} />
+        <img src={`/${icon}.svg`} width={24} height={24} alt={`${text} logo`} />
       </div>
     )
   }
