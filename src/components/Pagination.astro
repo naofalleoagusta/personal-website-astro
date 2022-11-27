@@ -11,7 +11,7 @@ const pageRange = getPageRange({ currentPage, size, total });
 ---
 
 <div class="w-full flex justify-center items-end gap-x-2">
-  <PaginationCard href={url.prev}>
+  <PaginationCard href={url.prev} direction="next">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"
@@ -48,7 +48,7 @@ const pageRange = getPageRange({ currentPage, size, total });
       );
     })
   }
-  <PaginationCard href={url.next}>
+  <PaginationCard href={url.next} direction="prev">
     <svg
       xmlns="http://www.w3.org/2000/svg"
       width="16"

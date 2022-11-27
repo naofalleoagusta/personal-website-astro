@@ -2,9 +2,10 @@
 export type Props = {
   pageNumber?: number;
   href: string | undefined;
+  direction?: "next" | "prev";
 };
 
-const { href, pageNumber } = Astro.props;
+const { href, pageNumber, direction } = Astro.props;
 const { page } = Astro.params;
 ---
 
@@ -24,6 +25,7 @@ const { page } = Astro.params;
     <button
       disabled
       class="flex items-center justify-center p-1 w-8 h-8 md:w-10 md:h-10 bg-gray-200 dark:bg-gray-700 cursor-not-allowed rounded-lg text-sm md:text-md"
+      id={direction && `${direction}-pagination-btn`}
     >
       <slot />
     </button>
