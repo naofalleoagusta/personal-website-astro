@@ -1,0 +1,68 @@
+---
+import { Image } from "@astrojs/image/components";
+import type { MarkdownLayoutProps } from "astro";
+
+import Section from "../components/Section.astro";
+import Layout from "./Layout.astro";
+
+import formatDate from "../helpers/formatDate";
+
+import { BASE_URL } from "../constants";
+
+type Props = MarkdownLayoutProps<{
+  title: string;
+  description: string;
+  permalink: string;
+  ogImage: string;
+  altOgImage: string;
+  date: string;
+  readingTime: string;
+}>;
+
+const { frontmatter } = Astro.props;
+const date = formatDate(frontmatter.date);
+---
+
+<Layout
+  description={frontmatter.description}
+  title={`naofalleoagusta | ${frontmatter.title}`}
+  permalink={`${BASE_URL}post/${frontmatter.permalink}`}
+  ogImage={`${BASE_URL}${frontmatter.ogImage}`}
+>
+  <Section isTitle title={frontmatter.title} classes="pt-24 dark:text-white">
+    <div class="flex flex-wrap text-sm items-center">
+      <time datetime={frontmatter.date} class="mr-2">{date}</time>
+      <div class="mr-2 w-1 h-1 bg-black rounded-full dark:bg-white"></div>
+      <div class="flex items-center">
+        <svg
+          width="20px"
+          height="20px"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          class="mr-[5px]"
+        >
+          <g>
+            <path d="M0 0h24v24H0z" class="fill-none"></path>
+            <path
+              class="fill-black dark:fill-white"
+              d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm1-8h4v2h-6V7h2v5z"
+            ></path>
+          </g>
+        </svg>
+        <span>
+          {frontmatter.readingTime} read
+        </span>
+      </div>
+    </div>
+    <Image
+      src={frontmatter.ogImage}
+      alt={frontmatter.altOgImage}
+      width={1024}
+      height={576}
+      class={"max-w-full"}
+    />
+  </Section>
+  <div class="dark:text-white mt-8 blog">
+    <slot />
+  </div>
+</Layout>

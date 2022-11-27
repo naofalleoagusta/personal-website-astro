@@ -93,11 +93,11 @@ export const EXPERIENCES: WorkingExperienceType[] = [
         I do at DNArtworks :
         <ul className="list-disc pl-[30px]">
           <li>
-            Develop a System Information for a Tour Company, especially in Tour
+            Developed a System Information for a Tour Company, especially in Tour
             Package.
           </li>
-          <li>Develop a Website Profile Company.</li>
-          <li>Developing a custom admin panel.</li>
+          <li>Developed a Website Profile Company.</li>
+          <li>Developed a custom admin panel.</li>
         </ul>
       </div>
     ),

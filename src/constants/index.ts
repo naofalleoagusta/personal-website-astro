@@ -1,6 +1,7 @@
 import type { LinkType } from "../types";
 
-export const BASE_URL = "https://naofalleoagusta.xyz/";
+export const BASE_URL =
+  import.meta.env.BASE_URL || "https://naofalleoagusta.xyz/";
 
 export const LINKS: LinkType[] = [
   {
