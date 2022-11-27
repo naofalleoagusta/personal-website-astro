@@ -1,0 +1,31 @@
+---
+export type Props = {
+  pageNumber?: number;
+  href: string | undefined;
+};
+
+const { href, pageNumber } = Astro.props;
+const { page } = Astro.params;
+---
+
+{
+  !!href ? (
+    <a
+      href={href}
+      class={`${
+        (page && Number(page) === pageNumber) || (!page && pageNumber === 1)
+          ? "border-2 border-black dark:border-white font-bold"
+          : ""
+      } text-sm md:text-md hover:border-2 hover:border-black hover:dark:border-white hover:font-bold flex items-center justify-center p-1 w-8 h-8 md:w-10 md:h-10 bg-gray-200 dark:bg-gray-700 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out rounded-lg`}
+    >
+      <slot />
+    </a>
+  ) : (
+    <button
+      disabled
+      class="flex items-center justify-center p-1 w-8 h-8 md:w-10 md:h-10 bg-gray-200 dark:bg-gray-700 cursor-not-allowed rounded-lg text-sm md:text-md"
+    >
+      <slot />
+    </button>
+  )
+}

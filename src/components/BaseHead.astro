@@ -8,10 +8,10 @@ export interface Props {
   ogImage?: string;
 }
 const {
-  title = "naofalleoagusta | Software Engineer",
+  title = "Naofal Leo Agusta | Software Engineer",
   description = "Personal Website of Naofal Leo Agusta. I work with React, Typescript, and Node.js",
   permalink = BASE_URL,
-  ogImage = `${BASE_URL}OG.png`,
+  ogImage = "OG.png",
 } = Astro.props;
 ---
 
@@ -30,7 +30,7 @@ const {
 <meta property="og:url" content={permalink} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:image" content={ogImage} />
+<meta property="og:image" content={`${BASE_URL}${ogImage}`} />
 
 <!-- Twitter -->
 <meta property="twitter:card" content="summary_large_image" />

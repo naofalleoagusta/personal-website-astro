@@ -8,16 +8,9 @@ import Layout from "./Layout.astro";
 import formatDate from "../helpers/formatDate";
 
 import { BASE_URL } from "../constants";
+import type { BlogPostType } from "../types";
 
-type Props = MarkdownLayoutProps<{
-  title: string;
-  description: string;
-  permalink: string;
-  ogImage: string;
-  altOgImage: string;
-  date: string;
-  readingTime: string;
-}>;
+type Props = MarkdownLayoutProps<BlogPostType>;
 
 const { frontmatter } = Astro.props;
 const date = formatDate(frontmatter.date);
@@ -26,8 +19,8 @@ const date = formatDate(frontmatter.date);
 <Layout
   description={frontmatter.description}
   title={`naofalleoagusta | ${frontmatter.title}`}
-  permalink={`${BASE_URL}post/${frontmatter.permalink}`}
-  ogImage={`${BASE_URL}${frontmatter.ogImage}`}
+  permalink={`post/${frontmatter.permalink}`}
+  ogImage={frontmatter.ogImage}
 >
   <Section isTitle title={frontmatter.title} classes="pt-24 dark:text-white">
     <div class="flex flex-wrap text-sm items-center">

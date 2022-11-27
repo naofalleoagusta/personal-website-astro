@@ -1,0 +1,64 @@
+---
+import getPageRange, { LEFT } from "../helpers/getPageRange";
+import type { PaginationType } from "../types";
+import PaginationCard from "./PaginationCard.astro";
+
+export type Props = Omit<PaginationType, "start" | "end" | "lastPage">;
+
+const { currentPage, size, total, url } = Astro.props;
+
+const pageRange = getPageRange({ currentPage, size, total });
+---
+
+<div class="w-full flex justify-center items-end gap-x-2">
+  <PaginationCard href={url.prev}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      class="rotate-90 transition-transform duration-300 ease-in-out fill-black dark:fill-white"
+    >
+      <path
+        d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"
+      ></path>
+    </svg>
+  </PaginationCard>
+  {
+    pageRange.map((dtPage) => {
+      if (typeof dtPage === "string") {
+        return (
+          <a
+            href={`/blog/${
+              dtPage === LEFT ? currentPage - 3 : currentPage + 3
+            }`}
+            class="h-full flex items-baseline dark:text-white text-sm md:text-md"
+          >
+            ...
+          </a>
+        );
+      }
+      return (
+        <PaginationCard
+          href={`/blog/${dtPage > 1 ? dtPage : ""}`}
+          pageNumber={dtPage}
+        >
+          {dtPage}
+        </PaginationCard>
+      );
+    })
+  }
+  <PaginationCard href={url.next}>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      class="-rotate-90 transition-transform duration-300 ease-in-out fill-black dark:fill-white"
+    >
+      <path
+        d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z"
+      ></path>
+    </svg>
+  </PaginationCard>
+</div>

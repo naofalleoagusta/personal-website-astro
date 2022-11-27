@@ -1,12 +1,13 @@
 ---
 title: Hello, World! 👋🏽
-ogImage: blog/hello-world.webp
+ogImage: blog-image/hello-world.webp
 description: Hello, World!. This is my first blog!.
 permalink: hello-world
 altOgImage: Console log of "Hello, World".
 layout: ../../layouts/BlogPostLayout.astro
 date: 11/27/2022 09:00:00
 readingTime: 1 min
+slug: hello-world
 ---
 
 Hello everyone! I'm writing my first blog on a [Markdown](https://daringfireball.net/projects/markdown/) file!, cool rite?. This was possible thanks to [Astro Markdown & MDX](https://docs.astro.build/en/guides/markdown-content/). Go check them out if you haven't!.
@@ -28,5 +29,8 @@ Alright that will be all from me, I'm signing off 🚶🏽‍♂️.
   }
   .blog a:hover{
     font-weight: 700;
+  }
+  .blog p{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
 </style>
