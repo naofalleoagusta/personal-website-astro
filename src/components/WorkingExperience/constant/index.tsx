@@ -59,7 +59,7 @@ export const EXPERIENCES: WorkingExperienceType[] = [
         investor decided to disband Kadoqu and transform the team into a
         software house called KadoSoft. KadoSoft helps people transform their
         business in the Digital Economy era. I joined KadoSoft as Freelance
-        Software Engineer, I helped KadoSoft developed:
+        Software Engineer, I helped KadoSoft:
         <ul className="list-disc pl-[30px]">
           <li>Developed a Website Profile Company for KadoSoft's client.</li>
           <li>Developed Kadosoft's landing page.</li>
@@ -90,11 +90,11 @@ export const EXPERIENCES: WorkingExperienceType[] = [
       <div>
         DNArtworks is a creative consultant company. I was responsible for
         maintaining and developing project for DNArtworks’s client. Things that
-        I do at DNArtworks :
+        I built at DNArtworks :
         <ul className="list-disc pl-[30px]">
           <li>
-            Developed a System Information for a Tour Company, especially in Tour
-            Package.
+            Developed a System Information for a Tour Company, especially in
+            Tour Package.
           </li>
           <li>Developed a Website Profile Company.</li>
           <li>Developed a custom admin panel.</li>
@@ -123,7 +123,7 @@ export const EXPERIENCES: WorkingExperienceType[] = [
         technology and recruiter network to provide faster and better hires
         without compromising quality. Working as full front-end engineer for the
         first time. I helped Ekrut maintaining and developing their internal and
-        external web-app. Stuff that I built at Ekrut :
+        external web-app for talent and employer management. Stuff that I built at Ekrut :
         <ul className="list-disc pl-[30px]">
           <li>
             Revamped Ekrut Media aka Blog from GatsbyJS to NextJS. Revamping
@@ -169,7 +169,7 @@ export const EXPERIENCES: WorkingExperienceType[] = [
         people and businesses through integrated technology solutions, as a
         means to enable them to make a leap into the future. I joined SIRCLO as
         front-end engineer on team product and channel, maintaining product
-        inventory and marketplace integration. So far, things that I built
+        inventory and marketplace integration. So far, things that I build at
         SIRCLO:
         <ul className="list-disc pl-[30px]">
           <li>

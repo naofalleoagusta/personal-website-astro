@@ -19,7 +19,7 @@ export const LINKS: LinkType[] = [
     newTab: true,
   },
   {
-    href: "https://www.linkedin.com/in/naofal-leo-agusta/",
+    href: "https://drive.google.com/file/d/1O5d1cltbuT44D8MuM_17oy06ePpmunif/view?usp=sharing",
     text: "Resume",
     icon: "resume",
     classes: "mt-2",
