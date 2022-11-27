@@ -1,6 +1,6 @@
 ---
 title: Hello, World! 👋🏽
-ogImage: /blog/hello-world.webp
+ogImage: blog/hello-world.webp
 description: Hello, World!. This is my first blog!.
 permalink: hello-world
 altOgImage: Console log of "Hello, World".
