@@ -1,3 +1,56 @@
-<svg width="24" height="24" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd">
-    <path d="M3 24h19v-23h-1v22h-18v1zm17-24h-18v22h18v-22zm-3 17h-12v1h12v-1zm0-3h-12v1h12v-1zm0-3h-12v1h12v-1zm-7.348-3.863l.948.3c-.145.529-.387.922-.725 1.178-.338.257-.767.385-1.287.385-.643 0-1.171-.22-1.585-.659-.414-.439-.621-1.04-.621-1.802 0-.806.208-1.432.624-1.878.416-.446.963-.669 1.642-.669.592 0 1.073.175 1.443.525.221.207.386.505.496.892l-.968.231c-.057-.251-.177-.449-.358-.594-.182-.146-.403-.218-.663-.218-.359 0-.65.129-.874.386-.223.258-.335.675-.335 1.252 0 .613.11 1.049.331 1.308.22.26.506.39.858.39.26 0 .484-.082.671-.248.187-.165.322-.425.403-.779zm3.023 1.78l-1.731-4.842h1.06l1.226 3.584 1.186-3.584h1.037l-1.734 4.842h-1.044z" />
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 490 490" style="enable-background:new 0 0 490 490;" xml:space="preserve">
+<g>
+	<g id="XMLID_25_">
+		<g>
+			<polygon style="fill:#AFB6BB;" points="430,100 340,100 340,10 			"/>
+			<polygon style="fill:#FFFFFF;" points="430,100 430,480 60,480 60,10 340,10 340,100 			"/>
+		</g>
+		<g>
+			<path style="fill:#231F20;" d="M439.976,100c-0.001-2.602-0.993-5.159-2.905-7.071l-90-90c-1.913-1.912-4.47-2.904-7.071-2.905V0
+				H60c-5.523,0-10,4.477-10,10v470c0,5.523,4.477,10,10,10h370c5.523,0,10-4.477,10-10V100H439.976z M350,34.142L405.858,90H350
+				V34.142z M70,470V20h260v80c0,5.523,4.477,10,10,10h80v360H70z"/>
+			<rect x="130" y="160" style="fill:#231F20;" width="260" height="20"/>
+			<rect x="100" y="220" style="fill:#231F20;" width="290" height="20"/>
+			<rect x="100" y="280" style="fill:#231F20;" width="290" height="20"/>
+			<rect x="100" y="340" style="fill:#231F20;" width="290" height="20"/>
+			<rect x="100" y="400" style="fill:#231F20;" width="230" height="20"/>
+			<rect x="355" y="400" style="fill:#231F20;" width="35" height="20"/>
+			<rect x="100" y="45" style="fill:#231F20;" width="60" height="20"/>
+			<rect x="100" y="80" style="fill:#231F20;" width="120" height="20"/>
+		</g>
+	</g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
 </svg>

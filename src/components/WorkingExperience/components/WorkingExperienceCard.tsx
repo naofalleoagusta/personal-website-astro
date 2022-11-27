@@ -124,7 +124,7 @@ const WorkingExperienceCard = ({
             </div>
           </div>
           <button
-            className="w-full p-2 mt-4 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
+            className="font-bold w-full p-2 mt-4 bg-gray-200 dark:bg-gray-700 dark:text-white rounded-md hover:bg-gray-300 dark:hover:bg-gray-800 transition duration-300 ease-in-out"
             onClick={handleOnClickBtn}
             id={`btn-${name}`}
           >
