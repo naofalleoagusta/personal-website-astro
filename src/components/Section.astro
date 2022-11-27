@@ -3,12 +3,17 @@ export interface Props {
   title: string;
   isTitle?: boolean;
   classes?: string;
+  fullHeight?: boolean;
 }
 
-const { title, isTitle = false, classes } = Astro.props;
+const { title, isTitle = false, classes, fullHeight } = Astro.props;
 ---
 
-<section class={`w-full flex flex-col space-y-8 ${classes ? classes : ""}`}>
+<section
+  class={`w-full flex flex-col space-y-8 ${classes ? classes : ""} ${
+    fullHeight ? "h-screen justify-center" : ""
+  }`}
+>
   {
     isTitle ? (
       <h1 class="text-5xl dark:text-white font-bold">{title}</h1>
