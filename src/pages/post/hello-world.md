@@ -27,10 +27,4 @@ Alright that will be all from me, I'm signing off 🚶🏽‍♂️.
   .dark .blog a {
     border-color: white;
   }
-  .blog a:hover{
-    font-weight: 700;
-  }
-  .blog p{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  }
 </style>

@@ -394,11 +394,6 @@
   resolved "https://registry.yarnpkg.com/@esbuild/linux-loong64/-/linux-loong64-0.15.15.tgz#32c65517a09320b62530867345222fde7794fbe1"
   integrity sha512-lhz6UNPMDXUhtXSulw8XlFAtSYO26WmHQnCi2Lg2p+/TMiJKNLtZCYUxV4wG6rZMzXmr8InGpNwk+DLT2Hm0PA==
 
-"@fontsource/dejavu-mono@^4.5.4":
-  version "4.5.4"
-  resolved "https://registry.yarnpkg.com/@fontsource/dejavu-mono/-/dejavu-mono-4.5.4.tgz#c0b969faf46c52dbed2db6a16da25ea2542e5d25"
-  integrity sha512-uWkCZnQKgIqZD24VEXH3jbvtSRF4RaHmtUHlWnHis+S8EZsC6QiJVS+vE3gnMF7thK1wEhj9dKNn90yiTjcdVQ==
-
 "@headlessui/react@^1.7.4":
   version "1.7.4"
   resolved "https://registry.yarnpkg.com/@headlessui/react/-/react-1.7.4.tgz#ba7f50fda20667276ee84fcd4c2a459aa26187e3"

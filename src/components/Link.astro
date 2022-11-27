@@ -10,7 +10,7 @@ const { href, text, icon, classes, newTab } = Astro.props;
   href={href}
   class={`${icon ? "flex items-center" : ""} space-x-2 ${
     classes ? classes : ""
-  } hover:font-bold group ${newTab ? "cursor-newTab" : ""}`}
+  } group ${newTab ? "cursor-newTab" : ""}`}
   target={newTab ? "_blank" : ""}
   rel="noreferrer noopener"
 >

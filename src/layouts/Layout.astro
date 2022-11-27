@@ -1,5 +1,4 @@
 ---
-import "@fontsource/dejavu-mono";
 import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 
@@ -43,8 +42,9 @@ const { title, description, permalink, ogImage } = Astro.props;
         height: 100%;
         -webkit-tap-highlight-color: transparent;
       }
-      body {
-        font-family: "DejaVu Mono", monospace;
+
+      html {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
       }
     </style>
 

@@ -74,7 +74,7 @@ const Navbar = () => {
             </a>
             <div className="flex space-x-4 items-center">
               <a
-                className="text-md dark:text-white hover:font-bold"
+                className="text-md border-b-2 border-dotted border-black dark:border-white dark:text-white"
                 href="/blog"
               >
                 Blog
