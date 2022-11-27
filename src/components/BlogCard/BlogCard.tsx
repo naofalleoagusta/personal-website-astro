@@ -9,7 +9,7 @@ type BlogCardProps = {
 const BlogCard = ({ blog }: BlogCardProps) => {
   return (
     <a
-      className="w-full rounded-lg text-white relative h-[320px] group hover:scale-110 hover:z-20 transition-all duration-500 p-1 hover:bg-gradient-to-r hover:from-green-300 hover:via-blue-500 hover:to-purple-600"
+      className="w-full rounded-lg text-white relative h-[320px] group hover:scale-110 hover:z-20 transition-all duration-300 ease-linear p-1 hover:bg-gradient-to-r hover:from-green-300 hover:via-blue-500 hover:to-purple-600"
       href={`/post/${blog.slug}`}
     >
       <div
