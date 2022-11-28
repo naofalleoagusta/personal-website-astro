@@ -82,7 +82,7 @@ const WorkingExperienceCard = ({
                   target="_blank"
                   rel="noreferrer noopener"
                   onClick={handleOnClickCompany}
-                  className="hover:border-b-2 border-dotted border-black dark:border-white cursor-newTab"
+                  className="border-b-2 border-dotted border-black dark:border-white dark:text-white cursor-newTab"
                 >
                   {name}
                 </a>
