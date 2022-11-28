@@ -31,7 +31,7 @@ const { title, description, permalink, ogImage } = Astro.props;
     class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black transition duration-500 ease-in-out"
   >
     <Navbar client:load />
-    <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6">
+    <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6 animate-fadeIn">
       <slot />
     </main>
     <Footer />
