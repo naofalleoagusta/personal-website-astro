@@ -18,7 +18,7 @@ export const LINKS: LinkType[] = [
     newTab: true,
   },
   {
-    href: "https://drive.google.com/file/d/1prVU34gOSB6OZh2ZLajxgzkjaGIL83oI/view?usp=sharing",
+    href: "https://drive.google.com/file/d/1JfJLII_6tpOljrskkwU2CWZOMA_t8jP5/view?usp=sharing",
     text: "Resume",
     icon: "resume",
     classes: "mt-2",
