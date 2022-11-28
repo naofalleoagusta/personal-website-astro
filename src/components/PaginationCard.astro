@@ -26,6 +26,8 @@ const { page } = Astro.params;
       disabled
       class="flex items-center justify-center p-1 w-8 h-8 md:w-10 md:h-10 bg-gray-200 dark:bg-gray-700 cursor-not-allowed rounded-lg text-sm md:text-md"
       id={direction && `${direction}-pagination-btn`}
+      name={direction && `${direction}-button`}
+      aria-label={direction && `${direction}-button`}
     >
       <slot />
     </button>

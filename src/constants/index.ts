@@ -1,7 +1,6 @@
 import type { LinkType } from "../types";
 
-export const BASE_URL =
-  import.meta.env.URL || "https://naofalleoagusta.xyz/";
+export const BASE_URL = import.meta.env.URL || "https://naofalleoagusta.xyz/";
 
 export const LINKS: LinkType[] = [
   {
@@ -19,7 +18,7 @@ export const LINKS: LinkType[] = [
     newTab: true,
   },
   {
-    href: "https://drive.google.com/file/d/1O5d1cltbuT44D8MuM_17oy06ePpmunif/view?usp=sharing",
+    href: "https://drive.google.com/file/d/1prVU34gOSB6OZh2ZLajxgzkjaGIL83oI/view?usp=sharing",
     text: "Resume",
     icon: "resume",
     classes: "mt-2",
