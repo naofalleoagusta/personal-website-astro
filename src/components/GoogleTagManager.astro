@@ -1,6 +1,5 @@
 <script type="text/partytown">
   (function (w, d, s, l, i) {
-    console.log(import.meta.env.PUBLIC_VERCEL_URL);
     w[l] = w[l] || [];
     w[l].push({
       "gtm.start": new Date().getTime(),
@@ -17,6 +16,6 @@
     document,
     "script",
     "dataLayer",
-    import.meta.env.GA_MEASUREMENT_ID
+    import.meta.env.PUBLIC_GA_MEASUREMENT_ID
   );
 </script>
