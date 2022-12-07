@@ -1,5 +1,6 @@
 <script type="text/partytown">
   (function (w, d, s, l, i) {
+    console.log(import.meta.env.PUBLIC_VERCEL_URL);
     w[l] = w[l] || [];
     w[l].push({
       "gtm.start": new Date().getTime(),
@@ -11,5 +12,11 @@
     j.async = true;
     j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
     f.parentNode.insertBefore(j, f);
-  })(window, document, "script", "dataLayer", import.meta.env.GA_MEASUREMENT_ID);
+  })(
+    window,
+    document,
+    "script",
+    "dataLayer",
+    import.meta.env.GA_MEASUREMENT_ID
+  );
 </script>
