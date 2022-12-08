@@ -3,4 +3,4 @@ Disallow:
 Disallow: /api
 
 
-Sitemap: https://naofalleoagusta.xyz/sitemap.xml
+Sitemap: https://naofalleoagusta.xyz/sitemap-index.xml
