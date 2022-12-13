@@ -3,6 +3,7 @@ import BaseHead from "../components/BaseHead.astro";
 import Footer from "../components/Footer.astro";
 import GoogleTagManager from "../components/GoogleTagManager.astro";
 import Navbar from "../components/Navbar/index";
+import SnowEffect from "../components/SnowEffect.astro";
 export interface Props {
   title?: string;
   description?: string;
@@ -27,12 +28,15 @@ const { title, description, permalink, ogImage } = Astro.props;
       ogImage={ogImage}
     />
     <GoogleTagManager />
+    <SnowEffect />
   </head>
   <body
     class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black transition duration-500 ease-in-out"
   >
     <Navbar client:load />
-    <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6 animate-fadeIn">
+    <main
+      class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6 animate-fadeIn"
+    >
       <slot />
     </main>
     <Footer />
