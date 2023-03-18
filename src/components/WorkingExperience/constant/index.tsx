@@ -10,9 +10,30 @@ export type WorkingExperienceType = {
 
 export const EXPERIENCES: WorkingExperienceType[] = [
   {
+    name:"GovTech Procurement (Telkom Indonesia)",
+     startDate:"Mar 2023",
+     endDate:"Present",
+    expandedContent:(
+      <div>
+        GovTech Procurement is a tribe under Telkom Indonesia dan LKPP (Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah).
+      </div>
+    ),
+    employmentType:"Full-time",
+    tools: [
+      "React",
+      "Typescript",
+      "Node.js",
+      "GraphQL",
+      "Tailwind",
+      "Next.js",
+      "React Query",
+      "Turborepo"
+    ],
+  },
+  {
     name: "SIRCLO",
     startDate: "Mar 2022",
-    endDate: "Present",
+    endDate: "Mar 2023",
     expandedContent: (
       <div>
         Founded in 2013, SIRCLO Group’s mission is to maximise the potential of
@@ -40,9 +61,10 @@ export const EXPERIENCES: WorkingExperienceType[] = [
     ),
     employmentType: "Full-time",
     tools: [
+      "React",
+      "Next.js",
       "Javascript",
       "Typescript",
-      "React",
       "Node.js",
       "SASS",
       "CSS",
@@ -85,8 +107,8 @@ export const EXPERIENCES: WorkingExperienceType[] = [
     ),
     employmentType: "Full-time",
     tools: [
-      "Next.js",
       "React",
+      "Next.js",
       "SASS",
       "LESS",
       "CSS",
@@ -120,9 +142,9 @@ export const EXPERIENCES: WorkingExperienceType[] = [
     ),
     employmentType: "Full-time",
     tools: [
+      "PHP",
       "Javascript",
       "Bootstrap",
-      "PHP",
       "jQuery",
       "CSS",
       "MySql",
@@ -130,7 +152,6 @@ export const EXPERIENCES: WorkingExperienceType[] = [
     ],
     website: "https://dnartworks.co.id/",
   },
-
   {
     name: "Kadosoft",
     startDate: "July 2020",

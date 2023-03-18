@@ -101,6 +101,8 @@ export const TOOLS_ICON: Record<string, string> = {
   Tailwind: "tailwind.svg",
   Astro: "astro.svg",
   "Vite.js": "vitejs.svg",
+  "React Query":"react-query.svg",
+  "Turborepo":"turborepo.png"
 };
 
 export const TECH_STACK = [
