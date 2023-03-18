@@ -10,15 +10,16 @@ export type WorkingExperienceType = {
 
 export const EXPERIENCES: WorkingExperienceType[] = [
   {
-    name:"GovTech Procurement (Telkom Indonesia)",
-     startDate:"Mar 2023",
-     endDate:"Present",
-    expandedContent:(
+    name: "GovTech Procurement (Telkom Indonesia)",
+    startDate: "Mar 2023",
+    endDate: "Present",
+    expandedContent: (
       <div>
-        GovTech Procurement is a tribe under Telkom Indonesia dan LKPP (Lembaga Kebijakan Pengadaan Barang/Jasa Pemerintah).
+        GovTech Procurement is a tribe under Telkom Indonesia dan LKPP (Lembaga
+        Kebijakan Pengadaan Barang/Jasa Pemerintah).
       </div>
     ),
-    employmentType:"Full-time",
+    employmentType: "Full-time",
     tools: [
       "React",
       "Typescript",
@@ -27,8 +28,9 @@ export const EXPERIENCES: WorkingExperienceType[] = [
       "Tailwind",
       "Next.js",
       "React Query",
-      "Turborepo"
+      "Turborepo",
     ],
+    website: "https://www.telkom.co.id/sites",
   },
   {
     name: "SIRCLO",
