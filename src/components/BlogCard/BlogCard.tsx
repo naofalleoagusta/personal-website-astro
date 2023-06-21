@@ -1,10 +1,10 @@
-import formatDate from "../../helpers/formatDate";
+import formatDate from "../../helpers/formatDate"
 
-import type { BlogPostType } from "../../types";
+import type { BlogPostType } from "../../types"
 
 type BlogCardProps = {
-  blog: BlogPostType;
-};
+  blog: BlogPostType
+}
 
 const BlogCard = ({ blog }: BlogCardProps) => {
   return (
@@ -50,7 +50,7 @@ const BlogCard = ({ blog }: BlogCardProps) => {
         </p>
       </div>
     </a>
-  );
-};
+  )
+}
 
-export default BlogCard;
+export default BlogCard

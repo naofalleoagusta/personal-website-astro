@@ -1,27 +1,27 @@
-import { ReactNode, useState } from "react";
-import "./index.css";
+import { ReactNode, useState } from "react"
+import "./index.css"
 
 type TooltipProps = {
-  direction?: "bottom" | "top" | "right" | "left";
-  delay?: number;
-  children: ReactNode;
-  content: ReactNode;
-};
+  direction?: "bottom" | "top" | "right" | "left"
+  delay?: number
+  children: ReactNode
+  content: ReactNode
+}
 
 const Tooltip = ({ children, content, direction, delay }: TooltipProps) => {
-  let timeout: number | undefined = undefined;
-  const [active, setActive] = useState(false);
+  let timeout: number | undefined = undefined
+  const [active, setActive] = useState(false)
 
   const showTip = () => {
     timeout = setTimeout(() => {
-      setActive(true);
-    }, delay || 100);
-  };
+      setActive(true)
+    }, delay || 100)
+  }
 
   const hideTip = () => {
-    clearInterval(timeout);
-    setActive(false);
-  };
+    clearInterval(timeout)
+    setActive(false)
+  }
 
   return (
     <div
@@ -34,7 +34,7 @@ const Tooltip = ({ children, content, direction, delay }: TooltipProps) => {
         <div className={`Tooltip-Tip ${direction || "top"}`}>{content}</div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default Tooltip;
+export default Tooltip

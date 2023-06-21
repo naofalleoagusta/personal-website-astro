@@ -1,19 +1,19 @@
-import { memo, useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react"
 
-import Tool from "../../Tool";
+import Tool from "../../Tool"
 
-import scrollToView from "../../../helpers/scrollToView";
+import scrollToView from "../../../helpers/scrollToView"
 
-import type { WorkingExperienceType } from "../constant";
+import type { WorkingExperienceType } from "../constant"
 
 type WorkingExperienceCardProps = WorkingExperienceType & {
-  expand: boolean;
-  handleExpand: (target: string) => void;
-};
+  expand: boolean
+  handleExpand: (target: string) => void
+}
 
 const preventPropagation = (event: any) => {
-  event.stopPropagation();
-};
+  event.stopPropagation()
+}
 
 const WorkingExperienceCard = ({
   employmentType,
@@ -26,34 +26,34 @@ const WorkingExperienceCard = ({
   expand,
   handleExpand,
 }: WorkingExperienceCardProps) => {
-  const [expandedContentHeight, setExpandedContentHeight] = useState(0);
-  const expandedContentRef = useRef<HTMLDivElement>(null);
+  const [expandedContentHeight, setExpandedContentHeight] = useState(0)
+  const expandedContentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (expandedContentRef?.current) {
-      setExpandedContentHeight(expandedContentRef.current.clientHeight);
+      setExpandedContentHeight(expandedContentRef.current.clientHeight)
     }
-  }, []);
+  }, [])
 
   const handleOnClick = () => {
-    handleExpand(name);
+    handleExpand(name)
     setTimeout(
       () => scrollToView(`${name.toLocaleLowerCase()}-experience`),
-      400
-    );
-  };
+      400,
+    )
+  }
 
   const handleOnClickBtn = (event: any) => {
-    preventPropagation(event);
-    handleOnClick();
-  };
+    preventPropagation(event)
+    handleOnClick()
+  }
 
   const handleOnClickCompany = (event: any) => {
     if (website) {
-      preventPropagation(event);
-      window.open(website);
+      preventPropagation(event)
+      window.open(website)
     }
-  };
+  }
 
   return (
     <div className="flex space-x-4 w-full">
@@ -133,8 +133,8 @@ const WorkingExperienceCard = ({
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const ArrowIcon = ({ expand }: { expand: boolean }) => {
   return (
@@ -151,10 +151,10 @@ const ArrowIcon = ({ expand }: { expand: boolean }) => {
         <path d="M0 7.33l2.829-2.83 9.175 9.339 9.167-9.339 2.829 2.83-11.996 12.17z" />
       </svg>
     </div>
-  );
-};
+  )
+}
 
 export default memo(WorkingExperienceCard, (prevProps, nextProps) => {
-  console.log(prevProps, nextProps);
-  return prevProps.expand === nextProps.expand;
-});
+  console.log(prevProps, nextProps)
+  return prevProps.expand === nextProps.expand
+})

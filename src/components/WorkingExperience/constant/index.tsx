@@ -1,12 +1,12 @@
 export type WorkingExperienceType = {
-  name: string;
-  startDate: string;
-  endDate: string;
-  expandedContent: React.ReactNode;
-  employmentType: "Full-time" | "Part-time" | "Freelance";
-  tools: string[];
-  website?: string;
-};
+  name: string
+  startDate: string
+  endDate: string
+  expandedContent: React.ReactNode
+  employmentType: "Full-time" | "Part-time" | "Freelance"
+  tools: string[]
+  website?: string
+}
 
 export const EXPERIENCES: WorkingExperienceType[] = [
   {
@@ -227,4 +227,4 @@ export const EXPERIENCES: WorkingExperienceType[] = [
       "CSS",
     ],
   },
-];
+]

@@ -1,37 +1,37 @@
 export type LinkType = {
-  href: string;
-  text: string;
-  icon?: string;
-  classes?: string;
-  newTab?: boolean;
-};
+  href: string
+  text: string
+  icon?: string
+  classes?: string
+  newTab?: boolean
+}
 
 export type ThemeOptionsType = {
-  dark: string;
-  light: string;
-};
+  dark: string
+  light: string
+}
 
 export type BlogPostType = {
-  title: string;
-  description: string;
-  permalink: string;
-  ogImage: string;
-  altOgImage: string;
-  date: string;
-  readingTime: string;
-  slug: string;
-};
+  title: string
+  description: string
+  permalink: string
+  ogImage: string
+  altOgImage: string
+  date: string
+  readingTime: string
+  slug: string
+}
 
 export type PaginationType = {
-  start: number;
-  end: number;
-  size: number;
-  total: number;
-  currentPage: number;
-  lastPage: number;
+  start: number
+  end: number
+  size: number
+  total: number
+  currentPage: number
+  lastPage: number
   url: {
-    current: string;
-    next: string | undefined;
-    prev: string | undefined;
-  };
-};
+    current: string
+    next: string | undefined
+    prev: string | undefined
+  }
+}

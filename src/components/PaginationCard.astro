@@ -1,12 +1,12 @@
 ---
 export type Props = {
-  pageNumber?: number;
-  href: string | undefined;
-  direction?: "next" | "prev";
-};
+  pageNumber?: number
+  href: string | undefined
+  direction?: "next" | "prev"
+}
 
-const { href, pageNumber, direction } = Astro.props;
-const { page } = Astro.params;
+const { href, pageNumber, direction } = Astro.props
+const { page } = Astro.params
 ---
 
 {

@@ -1,13 +1,13 @@
 ---
-import getPageRange, { LEFT } from "../helpers/getPageRange";
-import type { PaginationType } from "../types";
-import PaginationCard from "./PaginationCard.astro";
+import getPageRange, { LEFT } from "../helpers/getPageRange"
+import type { PaginationType } from "../types"
+import PaginationCard from "./PaginationCard.astro"
 
-export type Props = Omit<PaginationType, "start" | "end" | "lastPage">;
+export type Props = Omit<PaginationType, "start" | "end" | "lastPage">
 
-const { currentPage, size, total, url } = Astro.props;
+const { currentPage, size, total, url } = Astro.props
 
-const pageRange = getPageRange({ currentPage, size, total });
+const pageRange = getPageRange({ currentPage, size, total })
 ---
 
 <div class="w-full flex justify-center items-end gap-x-2">
@@ -36,7 +36,7 @@ const pageRange = getPageRange({ currentPage, size, total });
           >
             ...
           </a>
-        );
+        )
       }
       return (
         <PaginationCard
@@ -45,7 +45,7 @@ const pageRange = getPageRange({ currentPage, size, total });
         >
           {dtPage}
         </PaginationCard>
-      );
+      )
     })
   }
   <PaginationCard href={url.next} direction="prev">

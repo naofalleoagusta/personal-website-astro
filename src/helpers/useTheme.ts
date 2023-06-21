@@ -1,12 +1,12 @@
-import create from "zustand";
-import { persist, devtools } from "zustand/middleware";
+import create from "zustand"
+import { persist, devtools } from "zustand/middleware"
 
-const KEY = "theme";
+const KEY = "theme"
 
 type ThemeType = {
-  theme: string;
-  handleSetTheme: () => void;
-};
+  theme: string
+  handleSetTheme: () => void
+}
 
 const useTheme = create<ThemeType>()(
   devtools(
@@ -15,10 +15,10 @@ const useTheme = create<ThemeType>()(
       handleSetTheme: () => {
         set((prev) => ({
           theme: prev.theme === "light" ? "dark" : "light",
-        }));
+        }))
       },
-    }))
-  )
-);
+    })),
+  ),
+)
 
-export default useTheme;
+export default useTheme

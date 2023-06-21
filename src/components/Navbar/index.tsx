@@ -1,56 +1,56 @@
-import { Switch } from "@headlessui/react";
-import { useState, useEffect } from "react";
-import useTheme from "../../helpers/useTheme";
+import { Switch } from "@headlessui/react"
+import { useState, useEffect } from "react"
+import useTheme from "../../helpers/useTheme"
 
 const Navbar = () => {
-  const { theme, handleSetTheme } = useTheme();
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const { theme, handleSetTheme } = useTheme()
+  const [isScrolled, setIsScrolled] = useState(false)
+  const [scrollProgress, setScrollProgress] = useState(0)
 
   const handleOnClickSwitch = () => {
-    handleSetTheme();
-    const isLightMode = theme === "light";
+    handleSetTheme()
+    const isLightMode = theme === "light"
     if (isLightMode) {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add("dark")
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove("dark")
     }
-    localStorage.setItem("theme", isLightMode ? "dark" : "light");
-  };
+    localStorage.setItem("theme", isLightMode ? "dark" : "light")
+  }
 
   const handleOnScroll = () => {
-    const windowHeight = window.scrollY;
-    const windowInnerHeight = window.innerHeight;
+    const windowHeight = window.scrollY
+    const windowInnerHeight = window.innerHeight
     const body = document.body,
-      html = document.documentElement;
+      html = document.documentElement
 
     const height = Math.max(
       body.scrollHeight,
       body.offsetHeight,
       html.clientHeight,
       html.scrollHeight,
-      html.offsetHeight
-    );
+      html.offsetHeight,
+    )
 
-    setIsScrolled(windowHeight > 50);
+    setIsScrolled(windowHeight > 50)
     setScrollProgress(
-      Math.floor((windowHeight / (height - windowInnerHeight)) * 100)
-    );
-  };
+      Math.floor((windowHeight / (height - windowInnerHeight)) * 100),
+    )
+  }
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      window.addEventListener("scroll", handleOnScroll);
+      window.addEventListener("scroll", handleOnScroll)
 
       return () => {
-        window.removeEventListener("scroll", handleOnScroll);
-      };
+        window.removeEventListener("scroll", handleOnScroll)
+      }
     }
-  }, []);
+  }, [])
 
   const scrollTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }
 
   return (
     <>
@@ -111,7 +111,7 @@ const Navbar = () => {
         />
       </button>
     </>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

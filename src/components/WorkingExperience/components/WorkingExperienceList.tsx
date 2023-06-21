@@ -1,15 +1,15 @@
-import { useCallback, useState } from "react";
+import { useCallback, useState } from "react"
 
-import WorkingExperienceCard from "./WorkingExperienceCard";
+import WorkingExperienceCard from "./WorkingExperienceCard"
 
-import { EXPERIENCES } from "../constant";
+import { EXPERIENCES } from "../constant"
 
 const WorkingExperienceList = () => {
-  const [target, setTarget] = useState("");
+  const [target, setTarget] = useState("")
 
   const handleExpand = useCallback((name: string) => {
-    setTarget((prev) => (prev === name ? "" : name));
-  }, []);
+    setTarget((prev) => (prev === name ? "" : name))
+  }, [])
 
   return (
     <div className="flex pl-4 relative mt-6">
@@ -25,7 +25,7 @@ const WorkingExperienceList = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default WorkingExperienceList;
+export default WorkingExperienceList

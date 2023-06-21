@@ -1,19 +1,19 @@
 ---
-import { Image } from "@astrojs/image/components";
-import type { MarkdownLayoutProps } from "astro";
+import { Image } from "@astrojs/image/components"
+import type { MarkdownLayoutProps } from "astro"
 
-import Section from "../components/Section.astro";
-import Layout from "./Layout.astro";
+import Section from "../components/Section.astro"
+import Layout from "./Layout.astro"
 
-import formatDate from "../helpers/formatDate";
+import formatDate from "../helpers/formatDate"
 
-import { BASE_URL } from "../constants";
-import type { BlogPostType } from "../types";
+import { BASE_URL } from "../constants"
+import type { BlogPostType } from "../types"
 
-type Props = MarkdownLayoutProps<BlogPostType>;
+type Props = MarkdownLayoutProps<BlogPostType>
 
-const { frontmatter } = Astro.props;
-const date = formatDate(frontmatter.date);
+const { frontmatter } = Astro.props
+const date = formatDate(frontmatter.date)
 ---
 
 <Layout

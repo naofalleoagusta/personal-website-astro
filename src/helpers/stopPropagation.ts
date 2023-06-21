@@ -1,4 +1,4 @@
 const stopPropagation = (event: any) => {
-  event.stopPropagation();
-};
-export default stopPropagation;
+  event.stopPropagation()
+}
+export default stopPropagation

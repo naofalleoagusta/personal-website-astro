@@ -1,6 +1,6 @@
-import type { LinkType } from "../types";
+import type { LinkType } from "../types"
 
-export const BASE_URL = import.meta.env.URL || "https://naofalleoagusta.xyz/";
+export const BASE_URL = import.meta.env.URL || "https://naofalleoagusta.xyz/"
 
 export const LINKS: LinkType[] = [
   {
@@ -24,7 +24,7 @@ export const LINKS: LinkType[] = [
     classes: "mt-2",
     newTab: true,
   },
-];
+]
 
 export const SOCIAL_LINKS: LinkType[] = [
   {
@@ -42,7 +42,7 @@ export const SOCIAL_LINKS: LinkType[] = [
     text: "Instagram",
     newTab: true,
   },
-];
+]
 
 export const NAVIGATION_LINKS: LinkType[] = [
   {
@@ -53,14 +53,14 @@ export const NAVIGATION_LINKS: LinkType[] = [
     href: "/about",
     text: "About",
   },
-];
+]
 
 export const BLOG_LINKS: LinkType[] = [
   {
     href: "/blog",
     text: "All posts",
   },
-];
+]
 
 export const FOOTER_LINKS: { title: string; links: LinkType[] }[] = [
   {
@@ -75,7 +75,7 @@ export const FOOTER_LINKS: { title: string; links: LinkType[] }[] = [
     title: "Blog",
     links: BLOG_LINKS,
   },
-];
+]
 
 export const TOOLS_ICON: Record<string, string> = {
   React: "react.svg",
@@ -103,7 +103,7 @@ export const TOOLS_ICON: Record<string, string> = {
   "Vite.js": "vitejs.svg",
   "React Query": "react-query.svg",
   Turborepo: "turborepo.png",
-};
+}
 
 export const TECH_STACK = [
   "React",
@@ -113,4 +113,4 @@ export const TECH_STACK = [
   "GraphQL",
   "Next.js",
   "Vite.js",
-];
+]

@@ -1,25 +1,25 @@
-import Tooltip from "../Tooltip";
+import Tooltip from "../Tooltip"
 
-import stopPropagation from "../../helpers/stopPropagation";
+import stopPropagation from "../../helpers/stopPropagation"
 
-import { TOOLS_ICON } from "../../constants";
+import { TOOLS_ICON } from "../../constants"
 
 const SIZES = {
   small: 36,
   medium: 44,
   large: 52,
-};
+}
 
 const classes = {
   small: `w-[${SIZES.small}px] h-[${SIZES.small}px] p-2`,
   medium: `w-[${SIZES.medium}px] h-[${SIZES.medium}px] p-2`,
   large: `w-[${SIZES.large}px] h-[${SIZES.large}px] p-3`,
-};
+}
 
 type ToolProps = {
-  size: "small" | "medium" | "large";
-  name: string;
-};
+  size: "small" | "medium" | "large"
+  name: string
+}
 
 const Tool = ({ name, size }: ToolProps) => {
   return (
@@ -37,7 +37,7 @@ const Tool = ({ name, size }: ToolProps) => {
         </div>
       </Tooltip>
     </div>
-  );
-};
+  )
+}
 
-export default Tool;
+export default Tool
