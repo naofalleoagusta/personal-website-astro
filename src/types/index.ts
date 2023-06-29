@@ -4,6 +4,7 @@ export type LinkType = {
   icon?: string
   classes?: string
   newTab?: boolean
+  popoverAlignment?: string
 }
 
 export type ThemeOptionsType = {

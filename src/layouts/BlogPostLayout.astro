@@ -7,7 +7,6 @@ import Layout from "./Layout.astro"
 
 import formatDate from "../helpers/formatDate"
 
-import { BASE_URL } from "../constants"
 import type { BlogPostType } from "../types"
 
 type Props = MarkdownLayoutProps<BlogPostType>
@@ -22,7 +21,11 @@ const date = formatDate(frontmatter.date)
   permalink={`post/${frontmatter.permalink}`}
   ogImage={frontmatter.ogImage}
 >
-  <Section isTitle title={frontmatter.title} classes="pt-24 dark:text-white">
+  <Section
+    isTitle
+    title={frontmatter.title}
+    classes="pt-24 dark:text-white max-w-xl mx-auto"
+  >
     <div class="flex flex-wrap text-sm items-center">
       <time datetime={frontmatter.date} class="mr-2">{date}</time>
       <div class="mr-2 w-1 h-1 bg-black rounded-full dark:bg-white"></div>
@@ -47,15 +50,93 @@ const date = formatDate(frontmatter.date)
         </span>
       </div>
     </div>
-    <Image
-      src={`/${frontmatter.ogImage}`}
-      alt={frontmatter.altOgImage}
-      width={1024}
-      height={576}
-      class={"max-w-full"}
-    />
   </Section>
-  <article class="dark:text-white mt-8 blog">
+
+  <Image
+    src={`/${frontmatter.ogImage}`}
+    alt={frontmatter.altOgImage}
+    width={1024}
+    height={576}
+    class="max-w-full mt-8"
+  />
+  <article class="dark:text-white mt-8 blog flex flex-col gap-4">
     <slot />
   </article>
 </Layout>
+
+<style is:global>
+  .blog a {
+    border-bottom: 2px solid black;
+    border-style: dotted;
+    cursor: url(/new-tab.png) 10 10, pointer;
+  }
+  .dark .blog a {
+    border-color: white;
+  }
+
+  .blog p,
+  h2,
+  h3,
+  h4,
+  ol,
+  ul {
+    max-width: 36rem;
+    width: 100%;
+    margin: 0 auto !important;
+  }
+
+  .blog h2,
+  .blog h3,
+  .blog h4 {
+    font-weight: 700;
+  }
+
+  .blog h2 {
+    font-size: 2rem;
+  }
+  .blog h3 {
+    font-size: 1.25rem;
+  }
+
+  .blog p code,
+  .blog li code,
+  .blog h3 code {
+    background-color: #cbd5e1;
+    color: #334155;
+    font-size: 14px;
+    padding: 2px;
+    border-radius: 4px;
+    word-break: normal;
+  }
+
+  .blog h3 code {
+    font-size: 1.125rem;
+  }
+
+  .blog li code {
+    word-break: break-all;
+  }
+
+  .dark .blog p code,
+  .dark .blog li code,
+  .dark .blog h3 code {
+    background-color: #1e293b;
+    color: #e5e7eb;
+  }
+
+  .blog ol {
+    list-style: decimal;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .blog ul {
+    list-style: disc;
+    padding-left: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+</style>

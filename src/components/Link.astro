@@ -3,7 +3,7 @@ import type { LinkType } from "../types"
 
 export interface Props extends LinkType {}
 
-const { href, text, icon, classes, newTab } = Astro.props
+const { href, text, icon, classes, newTab, popoverAlignment } = Astro.props
 ---
 
 <a
@@ -13,6 +13,8 @@ const { href, text, icon, classes, newTab } = Astro.props
   } group ${newTab ? "cursor-newTab" : ""}`}
   target={newTab ? "_blank" : ""}
   rel="noreferrer noopener"
+  title={href}
+  data-tooltip-placement={popoverAlignment || "top"}
 >
   {
     icon && (

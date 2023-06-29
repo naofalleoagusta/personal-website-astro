@@ -8,7 +8,7 @@ import BlogCard from "../../components/BlogCard/BlogCard"
 import Pagination from "../../components/Pagination.astro"
 
 export async function getStaticPaths({ paginate }: any) {
-  const allPosts = await Astro.glob<BlogPostType>("../post/*.md")
+  const allPosts = await Astro.glob<BlogPostType>("../post/*.mdx")
   const allSortedPosts = allPosts.sort(
     (a, b) =>
       new Date(b.frontmatter.date).valueOf() -

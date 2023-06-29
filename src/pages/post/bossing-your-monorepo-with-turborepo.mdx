@@ -1,0 +1,352 @@
+---
+title: "Bossing Your Monorepo With Turborepo"
+ogImage: "blog-image/monorepo.webp"
+description: "Working with monorepo can be very difficult to scale up as our code grow bigger. Turborepo solves our monorepo's scaling problem by storing the result of all our tasks to remote cache stores, meaning that our `CI` never needs to do the same work twice. "
+permalink: "bossing-your-monorepo-with-turborepo"
+altOgImage: "Buzz Lightyear showing monorepo everywhere"
+layout: "../../layouts/BlogPostLayout.astro"
+date: "06/29/2023 13:40:00"
+readingTime: "10 min"
+slug: "bossing-your-monorepo-with-turborepo"
+---
+
+import BlogImage from "@/components/BlogImage"
+import Link from "@/components/Link.astro"
+import Codeblock from "@/components/Codeblock"
+
+When I was working at e-commerce enabler startup, there are few quite days where I find myself frustrated with our polyrepo architecture. Most of our apps shared the same code and logic, in order to reduce the repetitiveness, we created an internal package/library a.k.a `shared-components` and publish it on npm registry.
+
+## The Problem
+
+It's all good untill bug started to appear on `shared-components`, causing an error on `app A` and `app B`. We'lll need to :
+
+1. Make a new commit on `shared-components` to fix the error.
+2. Run a publish task inside `shared-components` to publish it to npm.
+3. Make a new commit on `app A`, bumping the version of the `shared-components` dependency
+4. Make a new commit on `app B`, bumping the version of the `shared-components` dependency
+5. Deploy `app A`
+6. Deploy `app B`
+
+Same thing goes with releasing a new feature on `shared-components`, bumping version of hell. The worst part of it, we have **6-8 applications**, meaning we had to repeat the bump version step 6-8 times. IMHO, it's not a good DX(developer experience).
+
+<BlogImage
+  src="https://media.tenor.com/QplCmNAM7lwAAAAC/captain-ray-holt-pain.gif"
+  alt="Captain Ray Holt describing pain"
+  client:visible
+/>
+
+## Solution
+
+Fast forward, I resigned from the job (not because of our polyrepo issue obviously 😅) and along the way I found a tool that could solve the DX issue of my previous employer. It's called <Link 
+        text="Turborepo"
+        href="https://turbo.build/repo/docs"
+        newTab/> , a high-performance build system for JavaScript and TypeScript codebases. Before we dive deep into <Link 
+        text="Turborepo"
+        href="https://turbo.build/repo/docs"
+        newTab/>, I would like to discuss more about monorepo.
+
+### What is Monorepo ?
+
+Monorepo is a single repository containing multiple projects in a single codebase. While these projects may be related, they are often logically independent and sometimes run by diferrent teams.
+
+### Monorepo Pros
+
+- Simpler dependency management
+- Consistency
+- Unified CI/CD
+- Unified build process
+
+With these benefits, refering to our issue earlier, in a monorepo setup `shared-components` would be in the same codebase as `app A` and `app B`. Tackling a bug would be so much easier :
+
+1. Make a new commit on `shared-components` to fix the error.
+2. Deploy `app A` and `app B`
+
+No versioning is required, because `app A` and `app B` don't depend on the version of `shared-components` in `npm` - they depend on the version that's in the codebase.
+
+### Monorepo Cons
+
+As our codebase grow, monorepo is difficult to scale up. The `CI` process may take longer than usual. Even though there is only one changes in `app A`, we had to run the entire projects task. Bummer. Worry not, that is where Turborepo came in to play.
+
+## Turborepo Caching
+
+Turborepo solves our monorepo's scaling problem by storing the result of all our tasks to remote cache stores, meaning that our `CI` never needs to do the same work twice. Let's say we want to run a `build` task with Turborepo using `turbo run build`:
+
+<BlogImage
+  src="/blog-image/cache-miss.webp"
+  alt="Turborepo Missing the Cache"
+  client:visible
+/>
+
+1. Turborepo will evaluate the inputs to your task and turn them into a hash (e.g. `78awdk123`).
+2. Check the local filesystem cache for a matching cache artifact (e.g.`./node_modules/.cache/turbo/78awdk123.tar.zst`).
+3. If Turborepo doesn't find any matching artifacts for the calculated hash, Turborepo will then execute the task.
+4. Once the task is completed, Turborepo **saves all specified outputs** (including files and logs) into a new cache artifact, addressed by the hash.
+
+<br />
+Let's say that you run the task again without changing any of its inputs:
+
+<BlogImage
+  src="/blog-image/cache-hit.webp"
+  alt="Turborepo Hitting the Cache"
+  client:visible
+/>
+
+1. The hash will be the same because the inputs haven't changed (e.g. `78awdk123`)
+2. Turborepo will find the cache artifact with a matching hash (e.g. `./node_modules/.cache/turbo/78awdk123.tar.zst`)
+3. Instead of running the task, Turborepo will replay the output - printing the saved logs to stdout and restoring the saved output files to their respective position in the filesystem.
+
+Restoring files and logs from the cache happens near-instantaneously. This can reduce our build times from minutes or hours down to seconds or milliseconds.
+
+## Getting Started
+
+In this section, we will try to create a new monorepo based on <Link 
+        text="Turborepo's Getting Started docs"
+        href="https://turbo.build/repo/docs/getting-started/create-new"
+        newTab popoverAlignment="right-start"/>. Also worth to noting, this section is a summary of Turborepo's documentation rather than my own writing.
+
+To create a new monorepo, use Turborepo's npm package `create-turbo`. In this case I'm using `pnpm` as my package manager.
+
+<Codeblock text="pnpm dlx create-turbo@latest" client:visible />
+
+You'll be asked a few questions
+
+### Where would you like to create your turborepo?
+
+You'll be able to choose anywhere you like. The default is `./my-turborepo`.
+
+### Which package manager do you want to use?
+
+Turborepo doesn't handle package installation. You'll be able to choose either :
+
+- <Link text="npm" href="https://www.npmjs.com/" newTab />
+- <Link text="yarn" href="https://yarnpkg.com/" newTab />
+- <Link text="pnpm" href="https://pnpm.io/" newTab />
+
+Once you've picked a package manager, `create-turbo` will create a bunch of new files inside the folder name you picked. It'll also install all the dependencies that come with the basic example by default.
+
+<Codeblock
+  text={
+    ">>> Creating a new turborepo with the following:\n - apps/web: Next.js with TypeScript\n - apps/docs: Next.js with TypeScript\n - packages/ui: Shared React component library\n - packages/eslint-config-custom: Shared configuration (ESLint)\n - packages/tsconfig: Shared TypeScript tsconfig.json\n"
+  }
+  client:visible
+/>
+
+Each of these is a workspace - a folder containing a `package.json`. Each workspace can declare its own dependencies, run its own scripts, and export code for other workspaces to use.
+
+### Understanding `packages/ui`
+
+First, open `./packages/ui/package.json`. You'll notice that the package's name is "name": "ui" - right at the top of the file.
+
+Next, open `./apps/web/package.json`. You'll notice that this package's name is "name": "web". But also - take a look in its dependencies.
+
+You'll see that "web" depends on a package called "ui". If you're using pnpm, you'll see it's declared like this:
+
+<Codeblock
+  text={`<code><span><span class="text-slate-700 dark:text-gray-300">{</span></span>
+  <span ><span class="text-red-500 dark:text-blue-400">"dependencies"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> {</span></span>
+  <span ><span class="text-slate-700 dark:text-gray-300">  </span><span class="text-red-500 dark:text-blue-400">"ui"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600 ">"workspace:*"</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300">}</span></span>
+<span><span class="text-slate-700 dark:text-gray-300">}</span></span></code>`}
+  client:visible
+  pathname="apps/web/package.json"
+  isPreline={false}
+  copyableText={`{\n  "dependencies": {\n    "ui": "workspace:*"\n  }\n}`}
+/>
+
+This means that our **web app depends on our local `ui` package**.
+
+If you look inside `apps/docs/package.json`, you'll see the same thing. Both `web` and `docs` depend on `ui` - a shared component library.
+
+This pattern of sharing code across applications is extremely common in monorepos - and means that multiple apps can share a single design system.
+
+### Understanding imports and exports
+
+Take a look inside `./apps/docs/pages/index.tsx`. Both docs and web are <Link text="Next.js" href="https://nextjs.org/" newTab /> applications, and they both use the ui library in a similar way:
+
+<Codeblock
+  text={`<code><span><span class="text-red-500 dark:text-blue-400">import</span><span class="text-slate-700 dark:text-gray-300"> {Button} </span><span class="text-red-500 dark:text-blue-400">from</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"ui"</span><span class="text-slate-700 dark:text-gray-300">;</span></span>
+<span><span class="text-slate-400 dark:text-gray-300">//      ^^^^^^        ^^</span></span>
+<span> </span>
+<span><span class="text-red-500 dark:text-blue-400">export</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">default</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">function</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-slate-700 dark:text-gray-300">Docs</span><span class="text-slate-700 dark:text-gray-300">() {</span>
+  <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">return</span><span class="text-slate-700 dark:text-gray-300"> (</span></span>
+    <span><span class="text-slate-700 dark:text-gray-300"> &lt;</span><span class="text-green-600">div</span><span class="text-slate-700 dark:text-gray-300">&gt;</span></span>
+      <span><span class="text-slate-700 dark:text-gray-300"> &lt;</span><span class="text-green-600">h1</span><span class="text-slate-700 dark:text-gray-300">&gt;Docs&lt;/</span><span class="text-green-600">h1</span><span class="text-slate-700 dark:text-gray-300">&gt;</span></span>
+      <span><span class="text-slate-700 dark:text-gray-300"> &lt;</span><span class="text-slate-700 dark:text-gray-300">Button</span><span class="text-slate-700 dark:text-gray-300"> /&gt;</span></span>
+    <span><span class="text-slate-700 dark:text-gray-300"> &lt;/</span><span class="text-green-600">div</span><span class="text-slate-700 dark:text-gray-300">&gt;</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> );</span></span>
+<span><span class="text-slate-700 dark:text-gray-300">}</span></span></span>
+</code>
+`}
+  client:visible
+  pathname="apps/docs/pages/index.tsx"
+  isPreline={false}
+  copyableText={`import { Button } from "ui"; \n //       ^^^^^^         ^^ \n export default function Docs() { \n  return ( \n    <div> \n      <h1>Docs</h1> \n      <Button /> \n    </div> \n  );\n }`}
+/>
+
+They're importing `Button` directly from a dependency called `ui`! How does that work? Where is Button coming from?
+
+Open `packages/ui/package.json`. You'll notice these two attributes:
+
+<Codeblock
+  text={`<code><span><span class="text-slate-700 dark:text-gray-300">{</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"main"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"./index.tsx"</span><span class="text-slate-700 dark:text-gray-300">,</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"types"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"./index.tsx"</span></span>
+<span><span class="text-slate-700 dark:text-gray-300">}</span></span></code>
+`}
+  client:visible
+  pathname="packages/ui/package.json"
+  isPreline={false}
+  copyableText={`{\n "main": "./index.tsx",\n "types": "./index.tsx"\n}`}
+/>
+
+When workspaces import from `ui`, `main` tells them where to access the code they're importing. `types` tells them where the TypeScript types are located.
+
+So, let's look inside `packages/ui/index.tsx`:
+
+<Codeblock
+  text={`<code><span><span class="text-red-500 dark:text-blue-400">import</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="dark:text-red-500 text-blue-400">*</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">as</span><span class="text-slate-700 dark:text-gray-300"> React </span><span class="text-red-500 dark:text-blue-400">from</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"react"</span><span class="text-slate-700 dark:text-gray-300">;</span></span>
+<span><span class="text-red-500 dark:text-blue-400">export</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="dark:text-red-500 text-blue-400">*</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">from</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"./Button"</span><span class="text-slate-700 dark:text-gray-300">;</span></span></code>`}
+  client:visible
+  pathname="packages/ui/index.tsx"
+  isPreline={false}
+  copyableText={`import * as React from "react";
+export * from "./Button";`}
+/>
+
+Everything inside this file will be able to be used by workspaces that depend on `ui`.
+
+`index.tsx` is exporting everything from a file called `./Button`, so let's go there:
+
+<Codeblock
+  text={`<code><span><span class="text-red-500 dark:text-blue-400">import</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="dark:text-red-500 text-blue-400">*</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">as</span><span class="text-slate-700 dark:text-gray-300"> React </span><span class="text-red-500 dark:text-blue-400">from</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"react"</span><span class="text-slate-700 dark:text-gray-300">;</span></span>
+  <span> </span>
+<span><span class="text-red-500 dark:text-blue-400">export</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">const</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-violet-500">Button</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">=</span><span class="text-slate-700 dark:text-gray-300"> () </span><span class="text-red-500 dark:text-blue-400">=&gt;</span><span class="text-slate-700 dark:text-gray-300"> {</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">return</span><span class="text-slate-700 dark:text-gray-300"> &lt;</span><span class="text-green-600">button</span><span class="text-slate-700 dark:text-gray-300">&gt;Boop&lt;/</span><span class="text-green-600">button</span><span class="text-slate-700 dark:text-gray-300">&gt;;</span></span>
+<span><span class="text-slate-700 dark:text-gray-300">};</span></span></code>
+`}
+  client:visible
+  pathname="packages/ui/Button.tsx"
+  isPreline={false}
+  copyableText={`import * as React from "react";
+ 
+export const Button = () => {
+  return <button>Boop</button>;
+};`}
+/>
+
+We've found our button! Any changes we make in this file will be shared across `web` and `docs`. Pretty cool!
+
+### Building with Turborepo
+
+Let's try running our build script:
+
+<Codeblock
+  text={`<code><span>pnpm <span class="text-orange-400">build</span></span></code>`}
+  client:visible
+  copyableText="pnpm build"
+/>
+
+Only `apps/docs` and `apps/web` specify a build script in their package.json, so only those are run.
+
+Take a look inside `build` in `turbo.json`. There's some interesting config there.
+
+<Codeblock
+  text={`<code><span><span class="text-slate-700 dark:text-gray-300">{</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"pipeline"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> {</span></span>
+    <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"build"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> {</span></span>
+      <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"outputs"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> [</span><span class="text-green-600">".next/**"</span><span class="text-slate-700 dark:text-gray-300">,</span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-green-600">"!.next/cache/**"</span><span class="text-slate-700 dark:text-gray-300">]</span></span>
+    <span><span class="text-slate-700 dark:text-gray-300"> }</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> }</span></span>
+<span><span class="text-slate-700 dark:text-gray-300">}</span></span></code>
+`}
+  client:visible
+  copyableText={`{
+  "pipeline": {
+    "build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    }
+  }
+}`}
+  isPreline={false}
+  pathname="turbo.json"
+/>
+
+You'll notice that some `outputs` have been specified. Declaring outputs will mean that when `turbo` finishes running your task, it'll save the output you specify in its cache.
+
+Both `apps/docs` and `apps/web` are Next.js apps, and they output builds to the `./.next` folder.
+
+Let's try something. Delete the `apps/docs/.next` build folder.
+
+Run the `build` script again. You'll notice:
+
+We hit `FULL TURBO` - the builds complete in under 100ms.
+The `.next` folder re-appears!
+Turborepo cached the result of our previous build. When we ran the `build` command again, it restored the entire `.next/**` folder from the cache. To learn more, check out Turborepo's docs on <Link text="cache outputs" href="https://turbo.build/repo/docs/core-concepts/caching/what-to-cache" newTab />.
+
+### Running dev script
+
+Let's now try running `dev`.
+
+<Codeblock
+  text={`<code><span>pnpm <span class="text-orange-400">dev</span></span></code>`}
+  client:visible
+  copyableText="pnpm dev"
+/>
+
+You'll notice some information in the terminal:
+
+1. Only two scripts will execute - `docs:dev` and `web:dev`. These are the only two workspaces which specify `dev`.
+2. Both `dev` scripts are run simultaneously, starting your Next.js apps on ports `3000` and `3001`.
+3. In the terminal, you'll see `cache bypass, force executing`.
+
+Try quitting out of the script, and re-running it. You'll notice we don't go `FULL TURBO`. Why is that?
+
+Take a look at turbo.json:
+
+<Codeblock
+  text={`<code><span><span class="text-slate-700 dark:text-gray-300">{</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"pipeline"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> {</span></span>
+    <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"dev"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="text-slate-700 dark:text-gray-300"> {</span></span>
+      <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"cache"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="dark:text-red-500 text-blue-400"> false</span><span class="text-slate-700 dark:text-gray-300">,</span></span>
+      <span><span class="text-slate-700 dark:text-gray-300"> </span><span class="text-red-500 dark:text-blue-400">"persistent"</span><span class="text-slate-700 dark:text-gray-300">:</span><span class="dark:text-red-500 text-blue-400"> true</span></span>
+    <span><span class="text-slate-700 dark:text-gray-300"> }</span></span>
+  <span><span class="text-slate-700 dark:text-gray-300"> }</span></span>
+<span><span class="text-slate-700 dark:text-gray-300">}</span></span></code>
+`}
+  client:visible
+  copyableText={`{
+  "pipeline": {
+    "build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    }
+  }
+}`}
+  isPreline={false}
+  pathname="turbo.json"
+/>
+
+Inside `dev`, we've specified `"cache": false`. This means we're telling Turborepo not to cache the results of the `dev` script. `dev` runs a persistent dev server and produces no outputs, so there is nothing to cache. Learn more about it in Turborepo's docs on <Link text="turning off caching" href="https://turbo.build/repo/docs/core-concepts/caching#turn-off-caching" newTab />.
+
+Additionally, we set `"persistent": true`, to let turbo know that this is a long-running dev server, so that turbo can ensure that no other tasks depend on it. You can read more in the <Link text="docs for the persistent option" href="https://turbo.build/repo/docs/reference/configuration#persistent" newTab />.
+
+### Running `dev` on only one workspace at a time
+
+By default, `turbo dev` will run `dev` on all workspaces at once. But sometimes, we might only want to choose one workspace.
+
+To handle this, we can add a `--filter` flag to our command.
+
+<Codeblock
+  text={`<code><span>pnpm <span class="text-orange-400">dev --filter docs</span></span></code>`}
+  client:visible
+  copyableText="pnpm dev"
+/>
+
+You'll notice that it now only runs docs:dev. Learn more about <Link text="filtering workspaces" href="https://turbo.build/repo/docs/core-concepts/monorepos/filtering" newTab/> from Turborepo's docs.
+
+<br />
+
+## The End
+
+Turborepo has helped me and my team to excel our productivity, not only preventing us from doing repetitive tasks, Turborepo has improve our `CI` time `3x faster`. Also worth noting, this blog post doesn't cover the entire usage of Turborepo, I encourage you to visit their <Link text="docs" href="https://turbo.build/repo/docs" newTab/> for more advanced usage. Massive thanks to Vercel and Turbo team, that will be all for me. Thank you for reading my blog post!
+
+Naofal signing out.
