@@ -21,6 +21,26 @@ const { title, description, permalink, ogImage } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      const theme = (() => {
+        if (
+          typeof localStorage !== "undefined" &&
+          localStorage.getItem("theme")
+        ) {
+          return localStorage.getItem("theme")
+        }
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+          return "dark"
+        }
+        return "light"
+      })()
+      if (theme === "light") {
+        document.documentElement.classList.remove("dark")
+      } else {
+        document.documentElement.classList.add("dark")
+      }
+      window.localStorage.setItem("theme", theme)
+    </script>
     <BaseHead
       title={title}
       description={description}
@@ -52,24 +72,6 @@ const { title, description, permalink, ogImage } = Astro.props
     </style>
 
     <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme")
-        }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark"
-        }
-        return "light"
-      })()
-      if (theme === "light") {
-        document.documentElement.classList.remove("dark")
-      } else {
-        document.documentElement.classList.add("dark")
-      }
-      window.localStorage.setItem("theme", theme)
       if (history.scrollRestoration) {
         history.scrollRestoration = "auto"
       } else {
