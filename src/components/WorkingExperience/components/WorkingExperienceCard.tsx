@@ -155,6 +155,5 @@ const ArrowIcon = ({ expand }: { expand: boolean }) => {
 }
 
 export default memo(WorkingExperienceCard, (prevProps, nextProps) => {
-  console.log(prevProps, nextProps)
   return prevProps.expand === nextProps.expand
 })

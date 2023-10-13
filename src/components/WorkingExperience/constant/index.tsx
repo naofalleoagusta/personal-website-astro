@@ -15,8 +15,10 @@ export const EXPERIENCES: WorkingExperienceType[] = [
     endDate: "Present",
     expandedContent: (
       <div>
-        GovTech Procurement is a tribe under Telkom Indonesia dan LKPP (Lembaga
-        Kebijakan Pengadaan Barang/Jasa Pemerintah).
+        GovTech Procurement is a government technology procurement division as
+        part of Telkom Indonesia, made to revolutionize and digitally transform
+        LKPP’s platforms and services in compliance of Presidential Decree No.
+        17 in 2023.
       </div>
     ),
     employmentType: "Full-time",
@@ -30,7 +32,7 @@ export const EXPERIENCES: WorkingExperienceType[] = [
       "React Query",
       "Turborepo",
     ],
-    website: "https://www.telkom.co.id/sites",
+    website: "https://www.eproc-gov.tech/",
   },
   {
     name: "SIRCLO",
