@@ -1,8 +1,19 @@
-import { format } from "date-fns"
-
 const formatDate = (date: string, withoutHour?: boolean) => {
   const newDate = new Date(date)
-  return format(newDate, `${withoutHour ? "" : "hh:mm aaa |"} dd MMM yyyy`)
+
+  const formatOptions: Intl.DateTimeFormatOptions = {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  }
+
+  if (!withoutHour) {
+    formatOptions.hour = "numeric"
+    formatOptions.minute = "numeric"
+    formatOptions.hour12 = true
+  }
+
+  return newDate.toLocaleString("en-US", formatOptions).replace(",", "")
 }
 
 export default formatDate
