@@ -7,6 +7,8 @@ import type { BlogPostType } from "../../types"
 import BlogCard from "../../components/BlogCard/BlogCard"
 import Pagination from "../../components/Pagination.astro"
 
+export const prerender = true
+
 export async function getStaticPaths({ paginate }: any) {
   const allPosts = await Astro.glob<BlogPostType>("../post/*.mdx")
   const allSortedPosts = allPosts.sort(
