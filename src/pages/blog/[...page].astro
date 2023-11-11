@@ -5,20 +5,13 @@ import Layout from "../../layouts/Layout.astro"
 import { BASE_URL } from "../../constants"
 import type { BlogPostType } from "../../types"
 import BlogCard from "../../components/BlogCard/BlogCard"
-import Pagination from "../../components/Pagination.astro"
 
-export const prerender = true
-
-export async function getStaticPaths({ paginate }: any) {
-  const allPosts = await Astro.glob<BlogPostType>("../post/*.mdx")
-  const allSortedPosts = allPosts.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).valueOf() -
-      new Date(a.frontmatter.date).valueOf(),
-  )
-  return paginate(allSortedPosts, { pageSize: 6 })
-}
-const { page } = Astro.props
+const allPosts = await Astro.glob<BlogPostType>("../post/*.mdx")
+const allSortedPosts = allPosts.sort(
+  (a, b) =>
+    new Date(b.frontmatter.date).valueOf() -
+    new Date(a.frontmatter.date).valueOf(),
+)
 ---
 
 <Layout
@@ -30,17 +23,11 @@ const { page } = Astro.props
   <Section isTitle title="Blog 📰" classes="py-24">
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
       {
-        !!page.data?.length &&
-          page.data.map((data: any) => (
+        !!allSortedPosts.length &&
+          allSortedPosts.map((data: any) => (
             <BlogCard blog={data.frontmatter} client:visible />
           ))
       }
     </div>
-    <Pagination
-      currentPage={page.currentPage}
-      size={page.size}
-      total={page.total}
-      url={page.url}
-    />
   </Section>
 </Layout>
