@@ -21,18 +21,6 @@ const { title, description, permalink, ogImage } = Astro.props
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
-    <BaseHead
-      title={title}
-      description={description}
-      permalink={permalink}
-      ogImage={ogImage}
-    />
-    <GoogleTagManager />
-    <Tooltips interactive={true} />
-  </head>
-  <body
-    class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black"
-  >
     <script is:inline>
       const theme = (() => {
         if (
@@ -53,6 +41,18 @@ const { title, description, permalink, ogImage } = Astro.props
       }
       window.localStorage.setItem("theme", theme)
     </script>
+    <BaseHead
+      title={title}
+      description={description}
+      permalink={permalink}
+      ogImage={ogImage}
+    />
+    <GoogleTagManager />
+    <Tooltips interactive={true} />
+  </head>
+  <body
+    class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black"
+  >
     <Navbar client:load />
     <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6">
       <slot />
