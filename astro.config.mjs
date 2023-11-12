@@ -32,6 +32,6 @@ export default defineConfig({
     }),
     mdx(),
   ],
-  output: "hybrid",
+  output: "server",
   adapter: vercel(),
 })

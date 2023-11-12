@@ -13,6 +13,7 @@ type Props = MarkdownLayoutProps<BlogPostType>
 
 const { frontmatter } = Astro.props
 const date = formatDate(frontmatter.date)
+export const prerender = true
 ---
 
 <Layout
