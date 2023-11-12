@@ -1,11 +1,11 @@
 import { defineConfig } from "astro/config"
 import tailwind from "@astrojs/tailwind"
 import react from "@astrojs/react"
+import image from "@astrojs/image"
 import sitemap from "@astrojs/sitemap"
 import partytown from "@astrojs/partytown"
-import mdx from "@astrojs/mdx"
 
-import vercel from "@astrojs/vercel/serverless"
+import mdx from "@astrojs/mdx"
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,6 +16,9 @@ export default defineConfig({
   integrations: [
     tailwind(),
     react(),
+    image({
+      serviceEntryPoint: "@astrojs/image/sharp",
+    }),
     sitemap({
       changefreq: "monthly",
       priority: 0.7,
@@ -32,6 +35,6 @@ export default defineConfig({
     }),
     mdx(),
   ],
-  output: "hybrid",
-  adapter: vercel(),
+  // output: "server",
+  // adapter: vercel()
 })
