@@ -60,6 +60,8 @@ const Navbar = ({ themeProp }: TNavbar) => {
     setTheme(themeProp)
   }, [themeProp])
 
+  console.log(theme)
+
   return (
     <>
       <header
