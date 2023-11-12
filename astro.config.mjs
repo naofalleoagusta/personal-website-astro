@@ -33,12 +33,5 @@ export default defineConfig({
     mdx(),
   ],
   output: "server",
-  adapter: vercel({
-    functionPerRoute: true,
-    maxDuration: 10,
-    speedInsights: {
-      enabled: true,
-    },
-    imageService: true,
-  }),
+  adapter: vercel(),
 })
