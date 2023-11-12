@@ -2,7 +2,7 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "target": "es2020",
-    "module": "commonjs",
+    "module": "ESNext",
     "lib": ["es2020"],
     "declaration": true,
     "outDir": "dist",
