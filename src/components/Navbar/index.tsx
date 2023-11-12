@@ -56,6 +56,10 @@ const Navbar = ({ themeProp }: TNavbar) => {
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
+  useEffect(() => {
+    setTheme(themeProp)
+  }, [themeProp])
+
   return (
     <>
       <header
