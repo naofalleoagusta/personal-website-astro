@@ -12,34 +12,34 @@ export interface Props {
 }
 
 const { title, description, permalink, ogImage } = Astro.props
+
+const cookie = Astro.request.headers.get("cookie")
+
+// if truthy, this theme will be set as data-theme on first render
+const theme = cookie?.split("theme=")[1].split(";")[0]
 ---
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class={theme}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
     <script is:inline>
-      const theme = (() => {
-        if (
-          typeof localStorage !== "undefined" &&
-          localStorage.getItem("theme")
-        ) {
-          return localStorage.getItem("theme")
+      // blocking script that executes the logic only on first visit
+      if (!document.documentElement.dataset.theme) {
+        const theme =
+          document.cookie?.split("theme=")[1]?.split(";")[0] ??
+          (window.matchMedia("(prefers-color-scheme: dark)")?.matches
+            ? "dark"
+            : "light")
+        document.cookie = `theme=${theme}`
+        document.documentElement.dataset.theme = theme
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark")
         }
-        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-          return "dark"
-        }
-        return "light"
-      })()
-      if (theme === "light") {
-        document.documentElement.classList.remove("dark")
-      } else {
-        document.documentElement.classList.add("dark")
       }
-      window.localStorage.setItem("theme", theme)
     </script>
     <BaseHead
       title={title}
@@ -53,7 +53,7 @@ const { title, description, permalink, ogImage } = Astro.props
   <body
     class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black"
   >
-    <Navbar client:load />
+    <Navbar client:load themeProp={theme || "light"} />
     <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6">
       <slot />
     </main>

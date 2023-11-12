@@ -1,21 +1,25 @@
 import { Switch } from "@headlessui/react"
 import { useState, useEffect } from "react"
-import useTheme from "../../helpers/useTheme"
+import Cookies from "js-cookie"
 
-const Navbar = () => {
-  const { theme, handleSetTheme } = useTheme()
+type TNavbar = {
+  themeProp: string
+}
+const Navbar = ({ themeProp }: TNavbar) => {
+  const [theme, setTheme] = useState(themeProp)
   const [isScrolled, setIsScrolled] = useState(false)
   const [scrollProgress, setScrollProgress] = useState(0)
 
   const handleOnClickSwitch = () => {
-    handleSetTheme()
     const isLightMode = theme === "light"
+    const tempTheme = isLightMode ? "dark" : "light"
+    setTheme(tempTheme)
     if (isLightMode) {
       document.documentElement.classList.add("dark")
     } else {
       document.documentElement.classList.remove("dark")
     }
-    localStorage.setItem("theme", isLightMode ? "dark" : "light")
+    Cookies.set("theme", tempTheme, { expires: 365 * 10 })
   }
 
   const handleOnScroll = () => {
