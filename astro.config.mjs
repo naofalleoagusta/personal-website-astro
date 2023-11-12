@@ -32,7 +32,7 @@ export default defineConfig({
     }),
     mdx(),
   ],
-  output: "hybrid",
+  output: "server",
   adapter: vercel({
     functionPerRoute: true,
     maxDuration: 10,

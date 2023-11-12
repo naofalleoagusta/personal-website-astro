@@ -20,6 +20,7 @@ const cookie = Astro.request.headers.get("cookie")
 
 let theme = ""
 if (cookie?.includes("theme")) {
+  console.log(cookie)
   theme = cookie?.split("theme=")[1].split(";")[0]
 }
 ---
@@ -31,6 +32,21 @@ if (cookie?.includes("theme")) {
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.png" />
     <meta name="generator" content={Astro.generator} />
+    <script is:inline>
+      // blocking script that executes the logic only on first visit
+      if (!document.documentElement.dataset.theme) {
+        const theme =
+          document.cookie?.split("theme=")[1]?.split(";")[0] ??
+          (window.matchMedia("(prefers-color-scheme: dark)")?.matches
+            ? "dark"
+            : "light")
+        document.cookie = `theme=${theme}`
+        document.documentElement.dataset.theme = theme
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark")
+        }
+      }
+    </script>
     <BaseHead
       title={title}
       description={description}
@@ -44,22 +60,6 @@ if (cookie?.includes("theme")) {
   <body
     class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black"
   >
-
-  <script is:inline>
-    // blocking script that executes the logic only on first visit
-    if (!document.documentElement.dataset.theme) {
-      const theme =
-        document.cookie?.split("theme=")[1]?.split(";")[0] ??
-        (window.matchMedia("(prefers-color-scheme: dark)")?.matches
-          ? "dark"
-          : "light")
-      document.cookie = `theme=${theme}`
-      document.documentElement.dataset.theme = theme
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark")
-      }
-    }
-  </script>
     <Navbar client:load themeProp={theme || "light"} />
     <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6">
       <slot />
