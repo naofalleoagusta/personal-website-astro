@@ -1,0 +1,245 @@
+@import url('https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap');
+@import "tailwindcss";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/500.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/jetbrains-mono/400.css";
+
+@theme {
+  /* Fonts */
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-display: 'Satoshi', 'Inter', sans-serif;
+
+  /* Light Mode Colors */
+  --color-bg-primary: #FAF6F1;
+  --color-bg-secondary: #F0EAE3;
+  --color-text-primary: #1A1614;
+  --color-text-secondary: #6B5E55;
+  --color-accent: #D4653A;
+  --color-accent-secondary: #B8542A;
+  --color-border: #1A1614;
+  --color-code-bg: #2A2420;
+
+  /* Spacing */
+  --spacing-section: 8rem;
+
+  /* Custom animations */
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-slide-up: slideUp 0.6s ease-out forwards;
+}
+
+/* Dark mode overrides */
+.dark {
+  --color-bg-primary: #1A1614;
+  --color-bg-secondary: #24201E;
+  --color-text-primary: #FAF6F1;
+  --color-text-secondary: #A89B91;
+  --color-accent: #E8835A;
+  --color-accent-secondary: #F0956E;
+  --color-border: #FAF6F1;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-bg-primary);
+    color: var(--color-text-primary);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-bg-primary);
+  }
+
+  /* Brutalist scrollbar */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-bg-primary);
+    border-left: 2px solid var(--color-border);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border: 2px solid var(--color-bg-primary);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-accent);
+  }
+
+  /* Skip to content — visually hidden until focused */
+  .skip-to-content {
+    position: absolute;
+    top: -100px;
+    left: 1rem;
+    z-index: 100;
+    padding: 0.75rem 1.25rem;
+    background: var(--color-accent);
+    color: var(--color-bg-primary);
+    border: 2px solid var(--color-border);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: top 0.2s ease;
+  }
+
+  .skip-to-content:focus {
+    top: 1rem;
+    outline: 2px solid var(--color-border);
+    outline-offset: 2px;
+  }
+
+  /* Global focus-visible — brutalist 2px ring with offset */
+  *:focus {
+    outline: none;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+    border-radius: 0;
+  }
+
+  /* Dark mode focus uses lighter accent */
+  .dark *:focus-visible {
+    outline-color: var(--color-accent);
+  }
+
+  a:focus-visible,
+  button:focus-visible,
+  [role="button"]:focus-visible,
+  [role="link"]:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+}
+
+@layer components {
+  .brutalist-border {
+    border: 2px solid var(--color-border);
+  }
+
+  .brutalist-border-thick {
+    border: 4px solid var(--color-border);
+  }
+
+  .brutalist-card {
+    border: 2px solid var(--color-border);
+    background: var(--color-bg-primary);
+    transition: transform 0.2s ease, border-color 0.2s ease;
+  }
+
+  .brutalist-card:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-4px);
+  }
+
+  .brutalist-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    overflow: hidden;
+    transition: color 0.3s ease;
+    cursor: pointer;
+  }
+
+  .brutalist-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-accent);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: -1;
+  }
+
+  .brutalist-button:hover {
+    color: var(--color-bg-primary);
+    border-color: var(--color-accent);
+  }
+
+  .brutalist-button:hover::before {
+    transform: translateX(0);
+  }
+
+  .section-padding {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Blog post row hover */
+.post-row {
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.post-row:hover {
+  transform: translateX(8px);
+  border-color: var(--color-accent) !important;
+}
+
+/* Featured post title */
+.featured-title {
+  transition: transform 0.3s ease;
+}
+.featured-post:hover .featured-title {
+  transform: translateX(8px);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

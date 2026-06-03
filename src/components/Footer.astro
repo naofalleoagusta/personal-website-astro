@@ -1,31 +1,92 @@
 ---
-import FooterLink from "./FooterLink.astro"
-import Link from "./Link.astro"
+import { SOCIAL_LINKS, NAV_LINKS } from '../data/constants';
 
-import { FOOTER_LINKS } from "../constants"
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(href + '/');
+};
 ---
 
-<footer
-  class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6 py-14 dark:text-white"
->
-  <div class="grid grid-cols-2 md:grid-cols-3 mb-4">
-    {FOOTER_LINKS.map((footerLink) => <FooterLink {...footerLink} />)}
-  </div>
-  <div class="flex justify-center text-md md:text-md">
-    <span class="flex items-center tracking-tighter flex-wrap">
-      <span class="mb-[1.5px] mr-[6px]">Made with 💖 on</span>
-      <Link text="Astro" href="https://astro.build/" icon="astro" newTab /><span
-        class="mb-[1.5px] mr-[8px]">,</span
-      >
-      <Link text="React" href="https://reactjs.org/" icon="react" newTab /><span
-        class="mb-[1.5px] mr-[8px]">, and</span
-      >
-      <Link
-        text="Tailwind"
-        href="https://tailwindcss.com/"
-        icon="tailwind"
-        newTab
-      />
-    </span>
+<footer class="border-t-2 bg-[var(--color-bg-primary)] border-[var(--color-border)] transition-colors duration-300">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+      <!-- Brand -->
+      <div class="md:col-span-1">
+        <a href="/" class="font-display font-bold text-2xl text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors">
+          NLA/~
+        </a>
+        <p class="mt-3 text-sm text-[var(--color-text-secondary)] max-w-xs">
+          Software engineer based in Palembang, Indonesia. Building things for the web with TypeScript, React, and Node.js.
+        </p>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <h3 class="font-display font-bold text-sm uppercase tracking-wider text-[var(--color-text-primary)] mb-4">
+          Navigation
+        </h3>
+        <ul class="space-y-2">
+          {NAV_LINKS.map((link) => {
+            const active = isActive(link.href);
+            return (
+              <li>
+                <a 
+                  href={link.href}
+                  aria-current={active ? 'page' : undefined}
+                  class:list={[
+                    'text-sm transition-colors',
+                    active
+                      ? 'text-[var(--color-accent)] font-medium'
+                      : 'text-[var(--color-text-secondary)] hover:text-[var(--color-accent)]',
+                  ]}
+                >
+                  {link.text}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+
+      <!-- Socials -->
+      <div>
+        <h3 class="font-display font-bold text-sm uppercase tracking-wider text-[var(--color-text-primary)] mb-4">
+          Socials
+        </h3>
+        <ul class="space-y-2">
+          {SOCIAL_LINKS.map((link) => (
+            <li>
+              <a 
+                href={link.href}
+                target={link.newTab ? '_blank' : undefined}
+                rel={link.newTab ? 'noopener noreferrer' : undefined}
+                class="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+              >
+                {link.text}
+              </a>
+            </li>
+          ))}
+          <li>
+            <a 
+              href="mailto:naofal.leo.agusta98@gmail.com"
+              class="text-sm text-[var(--color-text-secondary)] hover:text-[var(--color-accent)] transition-colors"
+            >
+              Email
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bottom bar -->
+    <div class="mt-12 pt-8 border-t-2 border-[var(--color-border)] flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-[var(--color-text-secondary)]">
+        &copy; {new Date().getFullYear()} Naofal Leo Agusta. All rights reserved.
+      </p>
+      <p class="text-xs text-[var(--color-text-secondary)]">
+        Built with Astro, React, and Tailwind CSS
+      </p>
+    </div>
   </div>
 </footer>

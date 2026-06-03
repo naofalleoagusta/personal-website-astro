@@ -1,93 +1,33 @@
 ---
-import SnowEffect from "@/components/SnowEffect.astro"
-import BaseHead from "../components/BaseHead.astro"
-import Footer from "../components/Footer.astro"
-import GoogleTagManager from "../components/GoogleTagManager.astro"
-import Navbar from "../components/Navbar/index"
-import { Tooltips } from "astro-tooltips"
-export interface Props {
-  title?: string
-  description?: string
-  permalink?: string
-  ogImage?: string
+import BaseHead from '../components/BaseHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import ScrollProgress from '../components/ScrollProgress';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { title, description, permalink, ogImage } = Astro.props
-
-const cookie = Astro.request.headers.get("cookie")
-
-// if truthy, this theme will be set as data-theme on first render
-
-let theme = ""
-if (cookie?.includes("theme")) {
-  theme = cookie?.split("theme=")[1].split(";")[0]
-}
-
-console.log(theme)
+const { title, description, ogImage, canonical, jsonLd } = Astro.props;
 ---
 
 <!DOCTYPE html>
-<html lang="en" class={theme} data-theme={theme}>
+<html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.png" />
-    <meta name="generator" content={Astro.generator} />
-    <BaseHead
-      title={title}
-      description={description}
-      permalink={permalink}
-      ogImage={ogImage}
-    />
-    <GoogleTagManager />
-    <SnowEffect />
-    <Tooltips interactive={true} />
+    <BaseHead title={title} description={description} ogImage={ogImage} canonical={canonical} jsonLd={jsonLd} />
   </head>
-  <body
-    class="bg-white dark:bg-gradient-to-b dark:from-gray-700 dark:via-gray-900 dark:to-black dark:bg-no-repeat dark:bg-black"
-  >
-
-  <script is:inline>
-    // blocking script that executes the logic only on first visit
-    if (!document.documentElement.dataset.theme) {
-      const theme =
-        document.cookie?.split("theme=")[1]?.split(";")[0] ??
-        (window.matchMedia("(prefers-color-scheme: dark)")?.matches
-          ? "dark"
-          : "light")
-      document.cookie = `theme=${theme}`
-      document.documentElement.dataset.theme = theme
-      if (theme === "dark") {
-        document.documentElement.classList.add("dark")
-      }
-    }
-  </script>
-    <Navbar client:load themeProp={theme || "light"} />
-    <main class="sm:max-w-xl md:max-w-full lg:max-w-screen-lg mx-auto px-6">
+  <body class="min-h-[100dvh] flex flex-col">
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <ScrollProgress client:load />
+    <Nav />
+    <main id="main-content" class="flex-1">
       <slot />
     </main>
     <Footer />
-    <style>
-      html,
-      body {
-        width: 100%;
-        height: 100%;
-        -webkit-tap-highlight-color: transparent;
-      }
-
-      html {
-        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-      }
-    </style>
-
-    <script is:inline>
-      if (history.scrollRestoration) {
-        history.scrollRestoration = "auto"
-      } else {
-        window.onbeforeunload = function () {
-          window.scrollTo(0, 0)
-        }
-      }
-    </script>
   </body>
 </html>

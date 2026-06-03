@@ -1,0 +1,29 @@
+---
+interface Props {
+  allTags: string[];
+}
+
+const { allTags } = Astro.props;
+---
+
+<div class="flex flex-wrap items-center gap-2 mb-8">
+  <span class="text-xs font-mono uppercase tracking-widest text-[var(--color-text-secondary)] mr-2">
+    Filter by tag
+  </span>
+  <button
+    data-tag-filter="all"
+    aria-pressed="true"
+    class="tag-filter-btn px-2.5 py-1 text-xs font-mono border-2 bg-[var(--color-accent)] border-[var(--color-accent)] text-[var(--color-bg-primary)] transition-colors"
+  >
+    All
+  </button>
+  {allTags.map((tag) => (
+    <button
+      data-tag-filter={tag}
+      aria-pressed="false"
+      class="tag-filter-btn px-2.5 py-1 text-xs font-mono border-2 border-[var(--color-border)] text-[var(--color-text-secondary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+    >
+      {tag}
+    </button>
+  ))}
+</div>

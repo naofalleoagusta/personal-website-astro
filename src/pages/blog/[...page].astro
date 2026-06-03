@@ -1,42 +1,260 @@
 ---
-import Section from "../../components/Section.astro"
-import Layout from "../../layouts/Layout.astro"
-import { BASE_URL } from "../../constants"
-import type { BlogPostType } from "../../types"
-import BlogCard from "../../components/BlogCard/BlogCard"
-import Pagination from "../../components/Pagination.astro"
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import type { GetStaticPaths } from 'astro';
+import TagFilter from '../../components/TagFilter.astro';
+import ogImage from '../../assets/blog/OG.webp';
 
-export async function getStaticPaths({ paginate }: any) {
-  const allPosts = await Astro.glob<BlogPostType>("../post/*.mdx")
-  const allSortedPosts = allPosts.sort(
-    (a, b) =>
-      new Date(b.frontmatter.date).valueOf() -
-      new Date(a.frontmatter.date).valueOf(),
-  )
-  return paginate(allSortedPosts, { pageSize: 6 })
-}
-const { page } = Astro.props
+export const getStaticPaths = (async ({ paginate }) => {
+  const allPosts = await getCollection('blog');
+  const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const allTags = [...new Set(sortedPosts.flatMap((post) => post.data.tags || []))].sort();
+  return paginate(sortedPosts, { pageSize: 10, props: { allTags } });
+}) satisfies GetStaticPaths;
+
+const { page, allTags } = Astro.props;
+const allPosts = page.data;
+
+const formatDateShort = (date: Date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    month: 'short',
+    year: 'numeric',
+  });
+};
+
+const formatDateLong = (date: Date) => {
+  return new Date(date).toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
+// Featured post is the most recent
+const featuredPost = allPosts[0];
+const remainingPosts = allPosts.slice(1);
 ---
+
 <Layout
-  title="Naofal Leo Agusta | Blog"
-  permalink={`${BASE_URL}blog`}
-  ogImage="/blog-image/OG.webp"
-  description="List of blog post by Naofal Leo Agusta"
+  title="Blog | Naofal Leo Agusta"
+  description="Blog posts by Naofal Leo Agusta about front-end engineering, React, Node.js, JavaScript, TypeScript, and more."
+  ogImage={ogImage.src}
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://naofalleoagusta.xyz' },
+      { '@type': 'ListItem', position: 2, name: 'Blog' },
+    ],
+  }}
 >
-  <Section isTitle title="Blog 📰" classes="py-24">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {
-        !!page.data?.length &&
-          page.data.map((data: any) => (
-            <BlogCard blog={data.frontmatter} client:visible />
-          ))
-      }
+  <section class="section-padding px-4 sm:px-6 lg:px-8 pt-28" data-pagefind-ignore>
+    <div class="max-w-[1400px] mx-auto">
+      {/* Header */}
+      <div class="mb-10">
+        <span class="text-xs font-mono uppercase tracking-widest text-[var(--color-accent)] mb-2 block">
+          Writing
+        </span>
+        <h1 class="font-display font-bold text-4xl sm:text-5xl lg:text-6xl text-[var(--color-text-primary)] mb-4">
+          Blog
+        </h1>
+        <p class="text-base text-[var(--color-text-secondary)] max-w-xl">
+          Thoughts, tutorials, and learnings from my journey as a software engineer.
+        </p>
+      </div>
+
+      {/* Tag Filter — client-side hydrated */}
+      <TagFilter allTags={allTags} />
+
+      {/* Featured Post */}
+      {featuredPost && (
+        <a
+          href={`/blog/${featuredPost.data.permalink}`}
+          class="featured-post block group mb-16 pb-10 border-b-4 border-[var(--color-accent)] transition-all"
+          data-tags={(featuredPost.data.tags || []).join(',')}
+        >
+          <div class="flex flex-wrap items-center gap-3 text-xs text-[var(--color-text-secondary)] mb-4">
+            <span class="font-mono">{formatDateLong(featuredPost.data.date)}</span>
+            <span class="w-1 h-1 bg-[var(--color-text-secondary)]" />
+            <span class="font-mono">{featuredPost.data.readingTime} read</span>
+            {(featuredPost.data.tags || []).length > 0 && (
+              <>
+                <span class="w-1 h-1 bg-[var(--color-text-secondary)]" />
+                <div class="flex gap-2">
+                  {(featuredPost.data.tags || []).map((tag) => (
+                    <span class="px-2 py-0.5 text-[10px] font-mono border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </>
+            )}
+          </div>
+          <h2 class="font-display font-bold text-3xl sm:text-4xl lg:text-5xl text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors mb-4 leading-tight featured-title">
+            {featuredPost.data.title}
+          </h2>
+          <p class="text-base sm:text-lg text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
+            {featuredPost.data.description}
+          </p>
+        </a>
+      )}
+
+      {/* Post List */}
+      {remainingPosts.length > 0 && (
+        <div class="post-list">
+          {remainingPosts.map((post, index) => (
+            <a
+              href={`/blog/${post.data.permalink}`}
+              class={`post-row block group py-6 sm:py-8 transition-all ${
+                index !== remainingPosts.length - 1 ? 'border-b-2 border-[var(--color-border)]' : ''
+              }`}
+              data-tags={(post.data.tags || []).join(',')}
+            >
+              <div class="grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start">
+                {/* Date */}
+                <div class="sm:col-span-2 lg:col-span-1">
+                  <span class="text-sm sm:text-base font-mono text-[var(--color-text-secondary)] group-hover:text-[var(--color-accent)] transition-colors">
+                    {formatDateShort(post.data.date)}
+                  </span>
+                </div>
+
+                {/* Title + Excerpt */}
+                <div class="sm:col-span-7 lg:col-span-8">
+                  <h3 class="font-display font-bold text-xl sm:text-2xl text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors mb-2 leading-tight">
+                    {post.data.title}
+                  </h3>
+                  <p class="text-sm text-[var(--color-text-secondary)] line-clamp-2 leading-relaxed">
+                    {post.data.description}
+                  </p>
+                </div>
+
+                {/* Meta */}
+                <div class="sm:col-span-3 lg:col-span-3 flex flex-row sm:flex-col items-center sm:items-end gap-2 sm:gap-1 text-xs text-[var(--color-text-secondary)]">
+                  <span class="font-mono">{post.data.readingTime}</span>
+                  {(post.data.tags || []).length > 0 && (
+                    <div class="flex flex-wrap justify-end gap-1">
+                      {(post.data.tags || []).slice(0, 2).map((tag) => (
+                        <span class="px-1.5 py-0.5 text-[10px] font-mono border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+                          {tag}
+                        </span>
+                      ))}
+                      {(post.data.tags || []).length > 2 && (
+                        <span class="px-1.5 py-0.5 text-[10px] font-mono text-[var(--color-text-secondary)]">
+                          +{(post.data.tags || []).length - 2}
+                        </span>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* Empty state when filtering */}
+      <div id="empty-state" class="hidden py-16 text-center" aria-live="polite">
+        <p class="text-sm text-[var(--color-text-secondary)] font-mono">No posts found for this tag.</p>
+      </div>
+
+      {/* Pagination */}
+      {page.lastPage > 1 && (
+        <div class="mt-12 flex items-center justify-between border-2 border-[var(--color-border)] p-4">
+          <span class="text-sm text-[var(--color-text-secondary)] font-mono">
+            Page {page.currentPage} of {page.lastPage}
+          </span>
+          <div class="flex items-center gap-3">
+            {page.url.prev ? (
+              <a href={page.url.prev} class="brutalist-button text-sm">
+                ← Previous
+              </a>
+            ) : (
+              <span class="brutalist-button text-sm opacity-50 cursor-not-allowed">
+                ← Previous
+              </span>
+            )}
+            {page.url.next ? (
+              <a href={page.url.next} class="brutalist-button text-sm">
+                Next →
+              </a>
+            ) : (
+              <span class="brutalist-button text-sm opacity-50 cursor-not-allowed">
+                Next →
+              </span>
+            )}
+          </div>
+        </div>
+      )}
     </div>
-    <Pagination
-      currentPage={page.currentPage}
-      size={page.size}
-      total={page.total}
-      url={page.url}
-    />
-  </Section>
+  </section>
 </Layout>
+
+<script>
+  const filterButtons = document.querySelectorAll('[data-tag-filter]');
+  const postRows = document.querySelectorAll('.post-row');
+  const featuredPost = document.querySelector('.featured-post');
+  const emptyState = document.getElementById('empty-state');
+
+  const applyFilter = (tag) => {
+    const target = (tag || 'all').toLowerCase();
+
+    filterButtons.forEach((b) => {
+      const isActive = (b.getAttribute('data-tag-filter') || '').toLowerCase() === target;
+      b.classList.toggle('bg-[var(--color-accent)]', isActive);
+      b.classList.toggle('border-[var(--color-accent)]', isActive);
+      b.classList.toggle('text-[var(--color-bg-primary)]', isActive);
+      b.classList.toggle('bg-transparent', !isActive);
+      b.classList.toggle('border-[var(--color-border)]', !isActive);
+      b.classList.toggle('text-[var(--color-text-secondary)]', !isActive);
+      b.setAttribute('aria-pressed', String(isActive));
+    });
+
+    let visibleCount = 0;
+
+    if (featuredPost) {
+      const featuredTags = (featuredPost.getAttribute('data-tags') || '').split(',').map((t) => t.toLowerCase());
+      if (target === 'all' || featuredTags.includes(target)) {
+        featuredPost.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        featuredPost.classList.add('hidden');
+      }
+    }
+
+    postRows.forEach((row) => {
+      const rowTags = (row.getAttribute('data-tags') || '').split(',').map((t) => t.toLowerCase());
+      if (target === 'all' || rowTags.includes(target)) {
+        row.classList.remove('hidden');
+        visibleCount++;
+      } else {
+        row.classList.add('hidden');
+      }
+    });
+
+    if (emptyState) {
+      emptyState.classList.toggle('hidden', visibleCount !== 0);
+    }
+  };
+
+  filterButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const tag = btn.getAttribute('data-tag-filter') || 'all';
+      applyFilter(tag);
+
+      const url = new URL(window.location.href);
+      if (tag === 'all') {
+        url.searchParams.delete('tag');
+      } else {
+        url.searchParams.set('tag', tag);
+      }
+      window.history.replaceState({}, '', url.toString());
+    });
+  });
+
+  const initialTag = new URLSearchParams(window.location.search).get('tag');
+  if (initialTag) {
+    applyFilter(initialTag);
+  }
+</script>
+
+

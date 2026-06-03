@@ -1,36 +1,22 @@
 ---
-import Link from "../components/Link.astro"
-import Section from "../components/Section.astro"
-import WorkingExperience from "../components/WorkingExperience/WorkingExperience.astro"
-import Layout from "../layouts/Layout.astro"
-import Tool from "../components/Tool"
+import Layout from '../layouts/Layout.astro';
+import HeroSection from '../sections/HeroSection';
+import TechStackSection from '../sections/TechStackSection';
+import ExperienceSection from '../sections/ExperienceSection';
+import BlogPreviewSection from '../sections/BlogPreviewSection';
+import { getCollection } from 'astro:content';
+import experiencesJson from '../data/experiences.json';
 
-import { LINKS, TECH_STACK } from "../constants"
+const allPosts = await getCollection('blog');
+const sortedPosts = allPosts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const latestPosts = sortedPosts.slice(0, 3);
+
+const experienceData = experiencesJson;
 ---
 
 <Layout>
-  <Section isTitle title="Hello, I'm Naofal!🙋🏽‍♂️" classes="pt-24 pb-16">
-    <div class="bg-gray-100 dark:bg-gray-900 p-4 rounded-lg">
-      <p class="text-black dark:text-white">
-        I'm a software engineer located in Palembang, Indonesia 🇮🇩. My career
-        has seen me wear multiple hats, from full-stack development to my
-        current role as a front-end developer. My daily toolkit includes
-        TypeScript, React, GraphQL, and Node.js.
-      </p>
-    </div>
-    <div class="flex mt-4 flex-wrap">
-      {LINKS.map((link) => <Link {...link} />)}
-    </div>
-  </Section>
-
-  <Section title="My Favorite Tech Stack 🧪" classes="mb-16">
-    <div class="flex flex-wrap">
-      {
-        TECH_STACK.map((dtTechStack) => (
-          <Tool name={dtTechStack} size="medium" client:visible />
-        ))
-      }
-    </div>
-  </Section>
-  <WorkingExperience />
+  <HeroSection client:load />
+  <TechStackSection client:visible />
+  <ExperienceSection experiences={experienceData} client:visible />
+  <BlogPreviewSection posts={latestPosts} client:visible />
 </Layout>

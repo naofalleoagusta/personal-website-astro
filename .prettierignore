@@ -1,5 +1,7 @@
-build
-coverage
 node_modules
-.vscode
+dist
+.astro
+.vercel
+package-lock.json
+pnpm-lock.yaml
 public

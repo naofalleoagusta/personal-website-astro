@@ -1,43 +1,27 @@
-import { defineConfig } from "astro/config"
-import tailwind from "@astrojs/tailwind"
-import react from "@astrojs/react"
-import sitemap from "@astrojs/sitemap"
-import partytown from "@astrojs/partytown"
-import mdx from "@astrojs/mdx"
-
-import vercel from "@astrojs/vercel/serverless"
+import { defineConfig } from 'astro/config';
+import mdx from '@astrojs/mdx';
+import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
+import react from '@astrojs/react';
+import vercel from '@astrojs/vercel';
 
 // https://astro.build/config
 export default defineConfig({
-  markdown: {
-    drafts: true,
-  },
-  site: "https://naofalleoagusta.xyz",
-  integrations: [
-    tailwind(),
-    react(),
-    sitemap({
-      changefreq: "monthly",
-      priority: 0.7,
-      lastmod: new Date("2023-07-06"),
-    }),
-    partytown({
-      // Adds dataLayer.push as a forwarding-event.
-      config: {
-        config: {
-          debug: false,
-        },
-        forward: ["dataLayer.push"],
-      },
-    }),
-    mdx(),
-  ],
-  output: "hybrid",
+  site: 'https://naofalleoagusta.xyz',
+  output: 'static',
   adapter: vercel({
-    functionPerRoute: true,
-    maxDuration: 10,
-    speedInsights: {
+    webAnalytics: {
       enabled: true,
     },
   }),
-})
+  integrations: [mdx(), sitemap(), react()],
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  markdown: {
+    shikiConfig: {
+      theme: 'github-dark',
+      wrap: true,
+    },
+  },
+});

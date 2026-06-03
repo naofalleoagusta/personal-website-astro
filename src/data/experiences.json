@@ -1,0 +1,88 @@
+[
+  {
+    "name": "GovTech Procurement (Telkom Indonesia)",
+    "startDate": "Mar 2023",
+    "endDate": "Present",
+    "employmentType": "Full-time",
+    "website": "https://www.eproc-gov.tech/",
+    "tools": ["React", "TypeScript", "Node.js", "GraphQL", "Tailwind", "Next.js", "React Query", "Turborepo"],
+    "description": "GovTech Procurement is a government technology procurement division as part of Telkom Indonesia, made to revolutionize and digitally transform LKPP's platforms and services in compliance of Presidential Decree No. 17 in 2023.",
+    "achievements": []
+  },
+  {
+    "name": "SIRCLO",
+    "startDate": "Mar 2022",
+    "endDate": "Mar 2023",
+    "employmentType": "Full-time",
+    "website": "https://sirclo.com/",
+    "tools": ["React", "Next.js", "JavaScript", "TypeScript", "Node.js", "SASS", "CSS", "GraphQL", "Apollo GraphQL", "Material-UI"],
+    "description": "Founded in 2013, SIRCLO Group's mission is to maximise the potential of people and businesses through integrated technology solutions. I joined SIRCLO as front-end engineer on team product and channel, maintaining product inventory and marketplace integration.",
+    "achievements": [
+      "Developed a dynamic and high performance table list component to be used across team.",
+      "Revamped Integration Channel UI and flow.",
+      "Implemented Apollo GraphQL caching on product list.",
+      "Developed an auto fill form using SessionStorage.",
+      "Developed an error message mappers from marketplace using cosine similarity.",
+      "Developed Wholesale Price for single product.",
+      "Developed Limit Purchase for single product."
+    ]
+  },
+  {
+    "name": "EKRUT",
+    "startDate": "May 2021",
+    "endDate": "Mar 2022",
+    "employmentType": "Full-time",
+    "website": "https://ekrut.com/",
+    "tools": ["React", "Next.js", "SASS", "LESS", "CSS", "Redux", "SEO", "JavaScript", "Node.js", "TypeScript"],
+    "description": "Established in 2016, EKRUT is a recruitment platform that uses technology and recruiter network to provide faster and better hires without compromising quality. Working as full front-end engineer for the first time.",
+    "achievements": [
+      "Revamped Ekrut Media (Blog) from GatsbyJS to NextJS. Boosted daily visitors from 100/day to 50K/day by maintaining Google Lighthouse score and fixing SEO meta tags.",
+      "Maintained and developed internal and external search talent feature.",
+      "Developed a high performance Selectable List component.",
+      "Helped bootstrap a Job portal for blue-collar workers."
+    ]
+  },
+  {
+    "name": "DNArtworks",
+    "startDate": "Oct 2020",
+    "endDate": "Apr 2021",
+    "employmentType": "Full-time",
+    "website": "https://dnartworks.co.id/",
+    "tools": ["PHP", "JavaScript", "Bootstrap", "jQuery", "CSS", "MySQL", "CodeIgniter"],
+    "description": "DNArtworks is a creative consultant company. I was responsible for maintaining and developing projects for DNArtworks's clients.",
+    "achievements": [
+      "Developed a System Information for a Tour Company, especially in Tour Package.",
+      "Developed a Website Profile Company.",
+      "Developed a custom admin panel."
+    ]
+  },
+  {
+    "name": "Kadosoft",
+    "startDate": "July 2020",
+    "endDate": "Feb 2021",
+    "employmentType": "Freelance",
+    "website": "",
+    "tools": ["React", "GraphQL", "JavaScript", "PostgreSQL", "Bootstrap", "Node.js", "PHP", "Laravel", "jQuery", "CSS", "MySQL"],
+    "description": "During the start of the pandemic, the investor decided to disband Kadoqu and transform the team into a software house called KadoSoft. I joined KadoSoft as Freelance Software Engineer.",
+    "achievements": [
+      "Developed a Website Profile Company for KadoSoft's client.",
+      "Developed Kadosoft's landing page.",
+      "Developed Kadosoft's showcase website."
+    ]
+  },
+  {
+    "name": "Kadoqu",
+    "startDate": "August 2019",
+    "endDate": "May 2020",
+    "employmentType": "Part-time",
+    "website": "",
+    "tools": ["React", "GraphQL", "JavaScript", "PostgreSQL", "Bootstrap", "Node.js", "Apollo GraphQL", "CSS"],
+    "description": "Kadoqu.com offers products and services starting from an event Reminder, Wrapping Lab, GiDA Bot, and variant gift products. I joined Kadoqu as part-time Software Engineer, responsible for maintaining and developing the Storefront and GraphQL.",
+    "achievements": [
+      "Developed a profile page for users to maintain their data, track order status, and wishlist.",
+      "Developed a lazy checker for shipping cost changes from third party API and shipping cost estimation.",
+      "Developed a PDF generator for order detail on admin panel.",
+      "Developed an event reminder Calendar."
+    ]
+  }
+]

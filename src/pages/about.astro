@@ -1,59 +1,166 @@
 ---
-import Section from "../components/Section.astro"
-import { BASE_URL, TECH_STACK } from "..//constants"
-import Layout from "../layouts/Layout.astro"
-import Link from "../components/Link.astro"
-import Tool from "../components/Tool"
+import Layout from '../layouts/Layout.astro';
+import { TECH_STACK } from '../data/constants';
+import { Github, Linkedin, Instagram, Mail } from 'lucide-react';
 ---
 
 <Layout
-  title="Naofal Leo Agusta | About"
-  permalink={`${BASE_URL}about`}
-  description="My fullname is Naofal Leo Agusta, I was born and raised in Palembang, Indonesia 🇮🇩. I've been working as a software engineer for the last 3 years with Computer Science Degree from Parahyangan Catholic University (UNPAR) , Bandung, Indonesia. For the last 2 years, I've been more specialized at front-end engineering."
+  title="About | Naofal Leo Agusta"
+  description="Learn more about Naofal Leo Agusta, a software engineer based in Palembang, Indonesia with expertise in front-end engineering."
+  jsonLd={{
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Naofal Leo Agusta',
+    url: 'https://naofalleoagusta.xyz',
+    jobTitle: 'Software Engineer',
+    description: 'Software engineer based in Palembang, Indonesia with expertise in front-end engineering.',
+    knowsAbout: ['React', 'TypeScript', 'Node.js', 'JavaScript', 'Tailwind CSS', 'GraphQL', 'Next.js'],
+    sameAs: [
+      'https://github.com/naofalleoagusta',
+      'https://www.linkedin.com/in/naofal-leo-agusta/',
+      'https://instagram.com/naofalleoagusta/',
+    ],
+    alumniOf: {
+      '@type': 'CollegeOrUniversity',
+      name: 'Parahyangan Catholic University',
+      sameAs: 'https://unpar.ac.id/',
+    },
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: 'Palembang',
+      addressCountry: 'ID',
+    },
+  }}
 >
-  <Section isTitle title="About Me 🤓" classes="pt-24 pb-12">
-    <div class="space-y-4 dark:text-white">
-      <p>
-        My fullname is Naofal Leo Agusta, I was born and raised in Palembang,
-        Indonesia 🇮🇩. I've been working as a software engineer for the last 3
-        years with Computer Science Degree from <Link
-          text="Parahyangan Catholic University (UNPAR)"
-          href="https://unpar.ac.id/"
-          newTab={true}
-        />, Bandung, Indonesia 🇮🇩. For the last 2 years, I've been more
-        specialized at front-end engineering.
-      </p>
-      <p>
-        I've been lucky enough to work with several tech stack, but I would say
-        I'm more prolific to work with these tech stack:
-      </p>
+  <section class="section-padding px-4 sm:px-6 lg:px-8 pt-28">
+    <div class="max-w-[1400px] mx-auto">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16">
+        <!-- Left column: Title & Quick Info -->
+        <div class="lg:col-span-4">
+          <h1 class="font-display font-bold text-4xl sm:text-5xl text-[var(--color-text-primary)] mb-6 leading-tight">
+            Naofal Leo Agusta
+          </h1>
+          <p class="text-xs font-mono uppercase tracking-widest text-[var(--color-accent)] mb-4">
+            About Me
+          </p>
+          <div class="brutalist-border p-4 mb-6">
+            <p class="text-sm font-mono text-[var(--color-text-secondary)] mb-1">
+              Location
+            </p>
+            <p class="text-sm font-medium text-[var(--color-text-primary)]">
+              Palembang, Indonesia 🇮🇩
+            </p>
+          </div>
+          <div class="brutalist-border p-4 mb-6">
+            <p class="text-sm font-mono text-[var(--color-text-secondary)] mb-1">
+              Education
+            </p>
+            <p class="text-sm font-medium text-[var(--color-text-primary)]">
+              Computer Science — Parahyangan Catholic University (UNPAR)
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <a
+              href="https://github.com/naofalleoagusta"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-10 h-10 border-2 flex items-center justify-center border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+              aria-label="Github"
+            >
+              <Github className="w-4 h-4" />
+            </a>
+            <a
+              href="https://www.linkedin.com/in/naofal-leo-agusta/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-10 h-10 border-2 flex items-center justify-center border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+              aria-label="LinkedIn"
+            >
+              <Linkedin className="w-4 h-4" />
+            </a>
+            <a
+              href="https://instagram.com/naofalleoagusta/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-10 h-10 border-2 flex items-center justify-center border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+              aria-label="Instagram"
+            >
+              <Instagram className="w-4 h-4" />
+            </a>
+            <a
+              href="mailto:naofal.leo.agusta98@gmail.com"
+              class="w-10 h-10 border-2 flex items-center justify-center border-[var(--color-border)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+              aria-label="Email"
+            >
+              <Mail className="w-4 h-4" />
+            </a>
+          </div>
+        </div>
 
-      <div class="flex flex-wrap">
-        {
-          TECH_STACK.map((dtTechStack) => (
-            <Tool name={dtTechStack} size="medium" client:visible />
-          ))
-        }
+        <!-- Right column: Bio -->
+        <div class="lg:col-span-8">
+          <div class="prose-custom space-y-6">
+            <p class="text-base sm:text-lg text-[var(--color-text-primary)] leading-relaxed">
+              My fullname is Naofal Leo Agusta, I was born and raised in Palembang, 
+              Indonesia 🇮🇩. I've been working as a software engineer for the last 3 years 
+              with Computer Science Degree from <a href="https://unpar.ac.id/" target="_blank" rel="noopener noreferrer" class="underline hover:text-[var(--color-accent)] transition-colors">Parahyangan Catholic University (UNPAR)</a>, 
+              Bandung, Indonesia 🇮🇩. For the last 2 years, I've been more specialized at front-end engineering.
+            </p>
+
+            <p class="text-base sm:text-lg text-[var(--color-text-primary)] leading-relaxed">
+              I've been lucky enough to work with several tech stack, but I would say 
+              I'm more prolific to work with these technologies:
+            </p>
+
+            <div class="flex flex-wrap gap-2 py-2">
+              {TECH_STACK.map((tech) => (
+                <span class="px-3 py-1.5 text-sm font-mono border-2 border-[var(--color-border)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors">
+                  {tech}
+                </span>
+              ))}
+            </div>
+
+            <p class="text-base sm:text-lg text-[var(--color-text-primary)] leading-relaxed">
+              I love learning new things, because I enjoyed being fascinated by new 
+              knowledge, especially technology. Therefore, I'm open to learn new tech 
+              stack or programming language, for the sake of my employer and science. 
+              At the moment, I'm diving deep into <strong>AI agents and vibe coding</strong> — I love the idea of building with natural language and pairing with machines to move faster than ever.
+            </p>
+
+            <p class="text-base sm:text-lg text-[var(--color-text-primary)] leading-relaxed">
+              I'm currently based in Palembang, Indonesia 🇮🇩, but I've been working 
+              remotely for several startup in Indonesia. I'm open for remote roles 
+              across the world.
+            </p>
+
+            <div class="brutalist-border-thick p-6 sm:p-8 mt-8">
+              <p class="text-base sm:text-lg text-[var(--color-text-primary)] mb-4">
+                Feel free to hit my email boxes:
+              </p>
+              <a
+                href="mailto:naofal.leo.agusta98@gmail.com"
+                class="brutalist-button gap-2 text-sm sm:text-base"
+              >
+                <Mail className="w-4 h-4" />
+                naofal.leo.agusta98@gmail.com
+              </a>
+            </div>
+          </div>
+        </div>
       </div>
-      <p>
-        I love learning new things, because I enjoyed being fascinated by new
-        knowledge, especially technology. Therefore, I'm open to learn new tech
-        stack or programming language, for the sake of my employer and science.
-        At the moment, I'm trying to learn Rust and WASM, because I heard it was <strong
-          >blazingly fast 🔥</strong
-        >
-      </p>
-      <p>
-        I'm currently based in Palembang, Indonesia 🇮🇩, but I've been working
-        remotely for several startup in Indonesia. I'm open for remote roles
-        across the world.
-      </p>
-      <p>
-        Feel free to hit my email boxes : <Link
-          text="naofal.leo.agusta98@gmail.com"
-          href="mailto:naofal.leo.agusta98@gmail.com"
-        />
-      </p>
     </div>
-  </Section>
+  </section>
 </Layout>
+
+<style>
+  .prose-custom p {
+    margin-bottom: 1rem;
+  }
+  .prose-custom a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .prose-custom strong {
+    font-weight: 700;
+  }
+</style>

@@ -1,0 +1,187 @@
+---
+import { NAV_LINKS } from '../data/constants';
+import ThemeToggle from './ThemeToggle';
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href === '/') return currentPath === '/';
+  return currentPath === href || currentPath.startsWith(href + '/');
+};
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 border-b-2 bg-[var(--color-bg-primary)] border-[var(--color-border)] transition-colors duration-300">
+  <div class="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center justify-between h-14 sm:h-16" aria-label="Primary">
+      <!-- Logo -->
+      <a 
+        href="/" 
+        class="font-display font-bold text-lg sm:text-xl tracking-tight text-[var(--color-text-primary)] hover:text-[var(--color-accent)] transition-colors"
+      >
+        NLA/~
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-1">
+        {NAV_LINKS.map((link) => {
+          const active = isActive(link.href);
+          return (
+            <a
+              href={link.href}
+              aria-current={active ? 'page' : undefined}
+              class:list={[
+                'relative px-3 py-1 text-sm font-medium uppercase tracking-wider transition-colors group',
+                active
+                  ? 'text-[var(--color-accent)]'
+                  : 'text-[var(--color-text-primary)] hover:text-[var(--color-accent)]',
+              ]}
+            >
+              {link.text}
+              <span
+                class:list={[
+                  'absolute bottom-0 left-3 right-3 h-[2px] bg-[var(--color-accent)] transition-transform origin-left',
+                  active ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100',
+                ]}
+              />
+            </a>
+          );
+        })}
+        <div class="ml-3">
+          <ThemeToggle client:load />
+        </div>
+      </div>
+
+      <!-- Mobile Nav Toggle -->
+      <div class="flex items-center gap-2 md:hidden">
+        <ThemeToggle client:load />
+        <button
+          id="mobile-menu-toggle"
+          class="w-10 h-10 border-2 flex items-center justify-center border-[var(--color-border)] bg-[var(--color-bg-primary)]"
+          aria-label="Toggle menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+            <path class="menu-icon-open" stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+            <path class="menu-icon-close hidden" stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+    </nav>
+  </div>
+
+  <!-- Mobile Menu Overlay -->
+  <div 
+    id="mobile-menu" 
+    class="fixed inset-0 top-14 bg-[var(--color-bg-primary)] border-b-2 border-[var(--color-border)] hidden flex-col"
+  >
+    <div class="flex flex-col p-4 gap-2">
+      {NAV_LINKS.map((link, i) => {
+        const active = isActive(link.href);
+        return (
+          <a
+            href={link.href}
+            aria-current={active ? 'page' : undefined}
+            class:list={[
+              'mobile-nav-link px-4 py-3 text-2xl font-display font-bold border-2 border-[var(--color-border)] transition-all opacity-0 translate-y-4',
+              active
+                ? 'text-[var(--color-accent)] bg-[var(--color-bg-secondary)]'
+                : 'text-[var(--color-text-primary)] hover:text-[var(--color-accent)] hover:bg-[var(--color-bg-secondary)]',
+            ]}
+            style={`transition-delay: ${i * 50}ms`}
+          >
+            {link.text}
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  const openIcon = toggle?.querySelector('.menu-icon-open');
+  const closeIcon = toggle?.querySelector('.menu-icon-close');
+  const links = menu?.querySelectorAll<HTMLAnchorElement>('.mobile-nav-link');
+  let isOpen = false;
+
+  const getFocusable = (): HTMLElement[] => {
+    if (!menu) return [];
+    return Array.from(menu.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'));
+  };
+
+  const openMenu = () => {
+    if (!menu || !toggle) return;
+    isOpen = true;
+    toggle.setAttribute('aria-expanded', 'true');
+    menu.classList.remove('hidden');
+    menu.classList.add('flex');
+    openIcon?.classList.add('hidden');
+    closeIcon?.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => {
+      links?.forEach((link) => {
+        link.classList.remove('opacity-0', 'translate-y-4');
+        link.classList.add('opacity-100', 'translate-y-0');
+      });
+      const focusable = getFocusable();
+      focusable[0]?.focus();
+    }, 50);
+  };
+
+  const closeMenu = () => {
+    if (!menu || !toggle) return;
+    isOpen = false;
+    toggle.setAttribute('aria-expanded', 'false');
+    links?.forEach((link) => {
+      link.classList.add('opacity-0', 'translate-y-4');
+      link.classList.remove('opacity-100', 'translate-y-0');
+    });
+    document.body.style.overflow = '';
+    setTimeout(() => {
+      menu.classList.add('hidden');
+      menu.classList.remove('flex');
+      openIcon?.classList.remove('hidden');
+      closeIcon?.classList.add('hidden');
+      toggle.focus();
+    }, 300);
+  };
+
+  toggle?.addEventListener('click', () => {
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  // Trap focus inside menu when open
+  menu?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !isOpen) return;
+    const focusable = getFocusable();
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && isOpen) {
+      closeMenu();
+    }
+  });
+
+  // Close menu on link click
+  links?.forEach((link) => {
+    link.addEventListener('click', () => {
+      if (isOpen) closeMenu();
+    });
+  });
+</script>
