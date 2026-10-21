@@ -1,0 +1,15 @@
+---
+import Workspace from '../layouts/Workspace.astro';
+import JsonView from '../components/workspace/JsonView.astro';
+import { EXPERIENCE } from '../lib/workspace';
+import experiences from '../data/experiences.json';
+---
+
+<Workspace
+  file={EXPERIENCE}
+  title="Experience | Naofal Leo Agusta"
+  description="Where Naofal Leo Agusta has worked: companies, roles, tools and achievements as a software engineer."
+>
+  <h1 class="sr-only">Experience</h1>
+  <JsonView value={experiences} />
+</Workspace>

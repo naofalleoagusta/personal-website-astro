@@ -1,0 +1,71 @@
+---
+import type { MarkdownHeading } from 'astro';
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import TopBar from '../components/workspace/TopBar.astro';
+import ActivityBar from '../components/workspace/ActivityBar.astro';
+import Explorer from '../components/workspace/Explorer.astro';
+import Breadcrumb from '../components/workspace/Breadcrumb.astro';
+import StatusBar from '../components/workspace/StatusBar.astro';
+import Tabs from '../components/workspace/Tabs';
+import Terminal from '../components/workspace/Terminal';
+import CommandPalette from '../components/workspace/CommandPalette';
+import { BLOG, ROOT_FILES, postFile, type WorkspaceFile } from '../lib/workspace';
+import '../styles/global.css';
+
+interface Props {
+  /** The File this page is */
+  file: WorkspaceFile;
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonical?: string;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  outline?: MarkdownHeading[];
+  readingTime?: string;
+}
+
+const { file, title, description, ogImage, canonical, jsonLd, outline, readingTime } = Astro.props;
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .map((post) => postFile(post.data));
+const allFiles = [BLOG, ...posts, ...ROOT_FILES];
+
+const pathname = Astro.url.pathname.replace(/(.)\/$/, '$1');
+---
+
+<!doctype html>
+<html lang="en" transition:animate="none">
+  <head>
+    <BaseHead title={title} description={description} ogImage={ogImage} canonical={canonical} jsonLd={jsonLd} />
+  </head>
+  <body>
+    <a href="#editor" class="skip-to-content">Skip to content</a>
+    <div class="ws">
+      <TopBar fileName={file.name} />
+      <div class="ws-body">
+        <ActivityBar />
+        <Explorer currentHref={pathname} posts={posts} outline={outline} />
+        <div class="ws-editor-col">
+          <Tabs
+            client:load
+            transition:persist="ws-tabs"
+            current={{ href: pathname, name: file.name, kind: file.kind }}
+          />
+          <Breadcrumb path={file.path} kind={file.kind} />
+          <main id="editor" class="ws-editor" tabindex="-1" transition:name="editor" transition:animate="fade">
+            <slot />
+          </main>
+          <Terminal client:idle transition:persist="ws-terminal" files={allFiles} pathname={pathname} />
+        </div>
+      </div>
+      <StatusBar kind={file.kind} readingTime={readingTime} />
+    </div>
+    <div class="ws-backdrop" data-drawer-close></div>
+    <CommandPalette client:idle transition:persist="ws-palette" files={allFiles} />
+    <script>
+      import '../scripts/workspace';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,37 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '../../lib/icons';
+
+const ACTIONS: { action: string; icon: IconName; label: string; jsOnly?: boolean }[] = [
+  { action: 'explorer', icon: 'files', label: 'Toggle explorer (Ctrl+B)', jsOnly: true },
+  { action: 'palette', icon: 'search', label: 'Command palette (Ctrl+K)', jsOnly: true },
+  { action: 'terminal', icon: 'terminal', label: 'Toggle terminal (Ctrl+`)', jsOnly: true },
+];
+---
+
+<nav class="hidden flex-col md:flex items-center gap-1 border-r border-line bg-panel py-2" aria-label="Activity bar">
+  {
+    ACTIONS.map(({ action, icon, label, jsOnly }) => (
+      <button
+        type="button"
+        class="flex size-10 items-center justify-center text-faint hover:text-fg"
+        data-action={action}
+        data-js-only={jsOnly || undefined}
+        aria-label={label}
+        title={label}
+      >
+        <Icon name={icon} class="size-5" />
+      </button>
+    ))
+  }
+  <button
+    type="button"
+    class="mt-auto flex size-10 items-center justify-center text-faint hover:text-fg"
+    data-action="theme"
+    data-js-only
+    aria-label="Switch theme"
+    title="Switch theme"
+  >
+    <Icon name="theme" class="size-5" />
+  </button>
+</nav>

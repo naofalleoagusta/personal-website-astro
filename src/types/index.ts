@@ -1,10 +1,3 @@
-export interface LinkType {
-  href: string;
-  text: string;
-  icon?: string;
-  newTab?: boolean;
-}
-
 export interface ExperienceType {
   name: string;
   startDate: string;
