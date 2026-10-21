@@ -1,0 +1,47 @@
+---
+import Icon from './Icon.astro';
+import { SOCIAL_LINKS } from '../../data/constants';
+import { LANGUAGE, type FileKind } from '../../lib/workspace';
+
+interface Props {
+  kind: FileKind;
+  readingTime?: string;
+}
+
+const { kind, readingTime } = Astro.props;
+const item = 'flex h-full items-center gap-1 px-2';
+const button = `${item} hover:bg-black/10`;
+---
+
+<footer class="flex items-stretch bg-accent text-[0.75rem] text-accent-fg" aria-label="Status bar">
+  <span class={item}><Icon name="branch" class="size-3.5" />main</span>
+  <span class:list={[item, 'hidden sm:flex']}><Icon name="check" class="size-3.5" />0 problems</span>
+
+  <span class="flex-1"></span>
+
+  <span class:list={[item, 'hidden sm:flex']} data-scroll-pct hidden></span>
+  {readingTime && <span class:list={[item, 'hidden sm:flex']}>{readingTime} read</span>}
+  <span class={item}>{LANGUAGE[kind]}</span>
+  <button type="button" class={button} data-action="theme" data-js-only aria-label="Switch theme">
+    <Icon name="theme" class="size-3.5" /><span data-theme-label>ember-dark</span>
+  </button>
+  <span class="hidden items-stretch md:flex">
+    {
+      SOCIAL_LINKS.map((link) => (
+        <a
+          href={link.href}
+          class={button}
+          aria-label={link.text}
+          title={link.text}
+          target={link.href.startsWith('http') ? '_blank' : undefined}
+          rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        >
+          <Icon name={link.icon} class="size-3.5" />
+        </a>
+      ))
+    }
+  </span>
+  <button type="button" class:list={[button, 'hidden md:flex']} data-action="palette" data-js-only>
+    <span data-mod-key>⌘K</span>
+  </button>
+</footer>

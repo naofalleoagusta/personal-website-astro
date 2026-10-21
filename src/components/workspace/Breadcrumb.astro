@@ -1,0 +1,41 @@
+---
+import FileBadge from './FileBadge.astro';
+import { ROOT_NAME, type FileKind } from '../../lib/workspace';
+
+interface Props {
+  /** Workspace path of the current File, e.g. `blog/ara-hunter.md` */
+  path: string;
+  kind: FileKind;
+}
+
+const { path, kind } = Astro.props;
+const segments = path.replace(/\/$/, '').split('/');
+const crumbs = segments.map((name, i) => ({
+  name,
+  href: i < segments.length - 1 ? `/${segments.slice(0, i + 1).join('/')}` : undefined,
+}));
+---
+
+<nav
+  class="flex h-6 flex-none items-center gap-1 overflow-x-auto whitespace-nowrap border-b border-line bg-bg px-4 text-xs text-muted"
+  aria-label="Breadcrumb"
+>
+  <a href="/" class="hover:text-fg">{ROOT_NAME}</a>
+  {
+    crumbs.map((crumb, i) => (
+      <>
+        <span class="text-faint" aria-hidden="true">›</span>
+        {crumb.href ? (
+          <a href={crumb.href} class="hover:text-fg">
+            {crumb.name}
+          </a>
+        ) : (
+          <span class="flex items-center text-fg" aria-current="page">
+            {i === crumbs.length - 1 && <FileBadge kind={kind} />}
+            {crumb.name}
+          </span>
+        )}
+      </>
+    ))
+  }
+</nav>

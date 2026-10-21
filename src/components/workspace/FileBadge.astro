@@ -1,0 +1,11 @@
+---
+import { FILE_GLYPH, type FileKind } from '../../lib/workspace';
+
+interface Props {
+  kind: FileKind;
+}
+
+const { kind } = Astro.props;
+---
+
+<span class="ws-badge" data-kind={kind} aria-hidden="true">{FILE_GLYPH[kind]}</span>

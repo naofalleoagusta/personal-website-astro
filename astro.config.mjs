@@ -20,7 +20,9 @@ export default defineConfig({
   },
   markdown: {
     shikiConfig: {
-      theme: 'github-dark',
+      // Dual themes, no default colour: global.css picks the one matching the active Theme
+      themes: { light: 'github-light', dark: 'github-dark' },
+      defaultColor: false,
       wrap: true,
     },
   },

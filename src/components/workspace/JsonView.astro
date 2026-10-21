@@ -1,0 +1,89 @@
+---
+// Renders a value as pretty-printed, syntax-highlighted JSON with a line-number gutter.
+// URL strings become links so the File stays useful, not just decorative.
+interface Props {
+  value: unknown;
+}
+
+type Kind = 'key' | 'str' | 'num' | 'punct';
+interface Token {
+  text: string;
+  kind?: Kind;
+  href?: string;
+}
+interface Line {
+  depth: number;
+  tokens: Token[];
+}
+
+const punct = (text: string): Token => ({ text, kind: 'punct' });
+
+function scalar(value: unknown): Token {
+  if (typeof value === 'string') {
+    return { text: JSON.stringify(value), kind: 'str', href: /^https?:\/\//.test(value) ? value : undefined };
+  }
+  return { text: JSON.stringify(value), kind: 'num' };
+}
+
+function emit(value: unknown, depth: number, prefix: Token[], comma: boolean, out: Line[]) {
+  const end = comma ? [punct(',')] : [];
+  const entries = Array.isArray(value)
+    ? value.map((v) => [undefined, v] as const)
+    : value && typeof value === 'object'
+      ? Object.entries(value).map(([k, v]) => [k, v] as const)
+      : undefined;
+
+  if (!entries) {
+    out.push({ depth, tokens: [...prefix, scalar(value), ...end] });
+    return;
+  }
+  const [open, close] = Array.isArray(value) ? ['[', ']'] : ['{', '}'];
+  if (entries.length === 0) {
+    out.push({ depth, tokens: [...prefix, punct(open + close), ...end] });
+    return;
+  }
+  out.push({ depth, tokens: [...prefix, punct(open)] });
+  entries.forEach(([key, child], i) => {
+    const keyTokens = key === undefined ? [] : [{ text: JSON.stringify(key), kind: 'key' as const }, punct(': ')];
+    emit(child, depth + 1, keyTokens, i < entries.length - 1, out);
+  });
+  out.push({ depth, tokens: [punct(close), ...end] });
+}
+
+const lines: Line[] = [];
+emit(Astro.props.value, 0, [], false, lines);
+
+const COLOR: Record<Kind, string> = {
+  key: 'text-syn-key',
+  str: 'text-syn-str',
+  num: 'text-syn-num',
+  punct: 'text-syn-punct',
+};
+const gutter = `${String(lines.length).length + 2}ch`;
+---
+
+<ol class="py-4 text-[0.8125rem] leading-6" style={`--gutter: ${gutter}`}>
+  {
+    lines.map(({ depth, tokens }, i) => (
+      <li class="json-line flex hover:bg-raised/60">
+        <span class="sticky left-0 flex-none select-none pr-4 text-right text-faint" style="width: var(--gutter)" aria-hidden="true">
+          {i + 1}
+        </span>
+        <code
+          class="min-w-0 flex-1 whitespace-pre-wrap break-words pr-4"
+          style={`padding-left: ${depth * 2 + 2}ch; text-indent: -2ch`}
+        >
+          {tokens.map((t) =>
+            t.href ? (
+              <a href={t.href} target="_blank" rel="noopener noreferrer" class:list={[COLOR[t.kind!], 'underline decoration-dotted underline-offset-2 hover:decoration-solid']}>
+                {t.text}
+              </a>
+            ) : (
+              <span class={t.kind && COLOR[t.kind]}>{t.text}</span>
+            )
+          )}
+        </code>
+      </li>
+    ))
+  }
+</ol>

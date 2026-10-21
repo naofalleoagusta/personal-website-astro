@@ -1,5 +1,6 @@
 ---
 import type { ImageMetadata } from 'astro';
+import { ClientRouter } from 'astro:transitions';
 
 interface Props {
   title?: string;
@@ -9,7 +10,7 @@ interface Props {
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 }
 
-const { 
+const {
   title = 'Naofal Leo Agusta | Software Engineer',
   description = 'Personal website and blog of Naofal Leo Agusta, a software engineer based in Palembang, Indonesia.',
   ogImage,
@@ -18,8 +19,8 @@ const {
 } = Astro.props;
 
 const defaultOgImage = '/images/og-default.png';
-const ogImageSrc = typeof ogImage === 'string' 
-  ? ogImage 
+const ogImageSrc = typeof ogImage === 'string'
+  ? ogImage
   : ogImage?.src ?? defaultOgImage;
 
 const siteUrl = 'https://naofalleoagusta.xyz';
@@ -35,9 +36,7 @@ const fullOgImage = ogImageSrc.startsWith('http') ? ogImageSrc : `${siteUrl}${og
 <meta name="author" content="Naofal Leo Agusta" />
 <link rel="canonical" href={canonical || Astro.url.href} />
 
-<!-- Theme color — adapts to current mode -->
-<meta name="theme-color" content="#FAF6F1" media="(prefers-color-scheme: light)" />
-<meta name="theme-color" content="#1A1614" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#141110" />
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="/favicon.png" />
@@ -66,11 +65,6 @@ const fullOgImage = ogImageSrc.startsWith('http') ? ogImageSrc : `${siteUrl}${og
 <meta property="twitter:description" content={description} />
 <meta property="twitter:image" content={fullOgImage} />
 
-<!-- Fonts preload -->
-<link rel="preconnect" href="https://api.fontshare.com" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
 <!-- JSON-LD structured data -->
 {jsonLd && (
   <script
@@ -79,12 +73,22 @@ const fullOgImage = ogImageSrc.startsWith('http') ? ogImageSrc : `${siteUrl}${og
   />
 )}
 
-<!-- Theme script (no flash) -->
+<!-- Without JS, hide the Workspace extras that need it (Tabs, Terminal, palette, theme switch) -->
+<noscript><style>[data-js-only] { display: none !important; }</style></noscript>
+
+<!-- Theme + Explorer state before first paint. Mirrors readTheme() in src/lib/theme.ts. -->
 <script is:inline>
-  (function() {
-    const theme = localStorage.getItem('theme') || 'light';
-    if (theme === 'dark') {
-      document.documentElement.classList.add('dark');
+  (function () {
+    const root = document.documentElement;
+    try {
+      let theme = localStorage.getItem('theme');
+      if (theme === 'light') theme = 'ember-light';
+      root.dataset.theme = theme === 'ember-light' ? 'ember-light' : 'ember-dark';
+      if (localStorage.getItem('ws:explorer') === 'closed') root.dataset.explorer = 'closed';
+    } catch {
+      root.dataset.theme = 'ember-dark';
     }
   })();
 </script>
+
+<ClientRouter />

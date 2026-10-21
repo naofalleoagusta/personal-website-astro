@@ -1,0 +1,104 @@
+---
+import type { MarkdownHeading } from 'astro';
+import Icon from './Icon.astro';
+import FileBadge from './FileBadge.astro';
+import { BLOG, ROOT_FILES, ROOT_NAME, type WorkspaceFile } from '../../lib/workspace';
+
+interface Props {
+  currentHref: string;
+  posts: WorkspaceFile[];
+  outline?: MarkdownHeading[];
+}
+
+const { currentHref, posts, outline = [] } = Astro.props;
+const blogActive = currentHref === BLOG.href || /^\/blog\/\d+$/.test(currentHref);
+const outlineHeadings = outline.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<aside
+  id="explorer"
+  class="ws-explorer flex min-h-0 flex-col overflow-hidden border-r border-line bg-panel"
+  aria-label="Explorer"
+>
+  <div class="ws-section-title justify-between">
+    <span>Explorer</span>
+    <a href="#editor" class="p-1 text-muted hover:text-fg md:hidden" data-drawer-close aria-label="Close explorer">
+      <Icon name="close" />
+    </a>
+  </div>
+
+  <nav class="min-h-0 flex-1 overflow-y-auto pb-4" aria-label="Files">
+    <p class="ws-row cursor-default pl-3 text-[0.6875rem] font-bold uppercase tracking-wider text-fg hover:bg-transparent">
+      {ROOT_NAME}
+    </p>
+
+    <details class="ws-folder" open>
+      <summary class="ws-row pl-3" data-active={blogActive || undefined}>
+        <Icon name="chevron" class="ws-chevron size-3.5 transition-transform" />
+        <a href={BLOG.href} class="flex-1 truncate" aria-current={blogActive ? 'page' : undefined}>
+          {BLOG.name}
+        </a>
+        <span class="text-[0.6875rem] text-faint">{posts.length}</span>
+      </summary>
+      <ul>
+        {
+          posts.map((post) => (
+            <li>
+              <a
+                href={post.href}
+                class="ws-row pl-8"
+                title={post.detail}
+                aria-current={currentHref === post.href ? 'page' : undefined}
+              >
+                <FileBadge kind={post.kind} />
+                <span class="truncate">{post.name}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </details>
+
+    <ul>
+      {
+        ROOT_FILES.map((file) => (
+          <li>
+            <a
+              href={file.href}
+              class="ws-row pl-3"
+              aria-current={currentHref === file.href ? 'page' : undefined}
+              target={file.external ? '_blank' : undefined}
+              rel={file.external ? 'noopener noreferrer' : undefined}
+            >
+              <FileBadge kind={file.kind} />
+              <span class="truncate">{file.name}</span>
+              {file.external && <Icon name="external" class="ml-auto size-3 text-faint" />}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  {
+    outlineHeadings.length > 0 && (
+      <section class="flex max-h-[45%] min-h-0 flex-col border-t border-line" aria-label="Outline">
+        <h2 class="ws-section-title">Outline</h2>
+        <ul class="min-h-0 overflow-y-auto pb-3">
+          {outlineHeadings.map((h) => (
+            <li>
+              <a
+                href={`#${h.slug}`}
+                class="ws-row"
+                style={`padding-left: ${h.depth === 2 ? 0.75 : 1.75}rem`}
+                data-outline-link={h.slug}
+              >
+                <span class="truncate">{h.text}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</aside>

@@ -1,30 +1,31 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import { ArrowLeft } from 'lucide-react';
+import Workspace from '../layouts/Workspace.astro';
+import { BLOG, README } from '../lib/workspace';
+
+const file = { name: 'untitled', path: 'untitled', href: '/404', kind: 'text' as const };
 ---
 
-<Layout
-  title="404 - Page Not Found | Naofal Leo Agusta"
-  description="The page you are looking for does not exist."
->
-  <section class="min-h-[70dvh] flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8">
-    <div class="text-center max-w-lg">
-      <div class="mb-6">
-        <span class="font-display font-bold text-[8rem] sm:text-[12rem] leading-none text-[var(--color-text-primary)] select-none">
-          4<span class="text-[var(--color-accent)]">0</span>4
-        </span>
-      </div>
-      <h1 class="font-display font-bold text-2xl sm:text-3xl text-[var(--color-text-primary)] mb-4">
-        Page Not Found
-      </h1>
-      <p class="text-base text-[var(--color-text-secondary)] mb-8">
-        The page you're looking for doesn't exist or has been moved. 
-        Let's get you back on track.
-      </p>
-      <a href="/" class="brutalist-button gap-2">
-        <ArrowLeft className="w-4 h-4" />
-        Back to Home
-      </a>
-    </div>
+<Workspace file={file} title="File not found | Naofal Leo Agusta" description="The file you are looking for does not exist.">
+  <section class="px-4 py-10 text-[0.8125rem] leading-6 sm:px-10">
+    <p class="text-syn-pdf">✕ Error: ENOENT: no such file or directory</p>
+    <h1 class="mt-4 text-xl font-bold text-fg">File not found</h1>
+    <p class="mt-2 text-muted">
+      Couldn't open <code class="text-syn-str" data-missing-path>that path</code> in this workspace. It may have
+      been moved, renamed, or never existed.
+    </p>
+    <ul class="mt-6 space-y-1">
+      <li data-js-only>
+        <span class="text-faint">-</span> Press <kbd class="text-fg" data-mod-key>⌘K</kbd> to search every file
+      </li>
+      <li><span class="text-faint">-</span> Open <a href={README.href} class="text-accent hover:underline">{README.name}</a></li>
+      <li><span class="text-faint">-</span> Browse <a href={BLOG.href} class="text-accent hover:underline">{BLOG.path}</a></li>
+    </ul>
   </section>
-</Layout>
+</Workspace>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const target = document.querySelector('[data-missing-path]');
+    if (target) target.textContent = window.location.pathname;
+  });
+</script>
